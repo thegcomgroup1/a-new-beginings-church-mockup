@@ -21,7 +21,7 @@ export function Hero() {
       {/* Base layer: always present (instant paint, mobile, fallback, SEO) */}
       <img
         src={heroMedia.imageSrc}
-        alt={`The ${siteConfig.church.name} congregation gathering on a Sunday morning`}
+        alt={siteConfig.brand.heroMedia.imageAlt}
         width={1920}
         height={1080}
         className="absolute inset-0 -z-10 h-full w-full object-cover"
