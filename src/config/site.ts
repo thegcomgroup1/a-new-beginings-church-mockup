@@ -126,7 +126,7 @@ export const siteConfig = {
 
   sermon: {
     title: "Latest Message",
-    speaker: "Pastor [confirm name]",
+    speaker: "Pastor Mark Matthews",
     series: "A New Beginning Church",
     date: "On Facebook",
     summary:
