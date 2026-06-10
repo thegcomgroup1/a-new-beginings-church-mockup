@@ -1,142 +1,144 @@
 /**
- * HLPR Master Ministry Base — site configuration (the swap layer).
+ * A New Beginning Church — Rushville, IN — site configuration (the swap layer).
  *
- * To re-skin for a new church, change values in this file plus the brand
- * tokens in src/styles.css. The structure of the page never changes.
+ * Sourced from their Facebook page. Spirit-led / charismatic Christian church.
  *
- * All copy below is written warm/plain/human, addressed to a nervous
- * first-time visitor. Square-bracket tokens are obvious swap targets.
+ * TODOs before going live:
+ *  - Upload real logo PNG to src/assets/anewbeginning/logo.png and set brand.logoImageSrc.
+ *  - Confirm pastor name (placeholder used in sermon block).
+ *  - Confirm giving platform/URL.
+ *  - Confirm "Church" vs "Ministry" wording with Mark.
  */
 
-import heroImage from "@/assets/placeholders/hero.jpg";
-import storyImage from "@/assets/placeholders/story.jpg";
-import life1 from "@/assets/placeholders/life-1.jpg";
-import life2 from "@/assets/placeholders/life-2.jpg";
-import life3 from "@/assets/placeholders/life-3.jpg";
-import life4 from "@/assets/placeholders/life-4.jpg";
-import life5 from "@/assets/placeholders/life-5.jpg";
-import life6 from "@/assets/placeholders/life-6.jpg";
+import hero from "@/assets/anewbeginning/hero.jpg.asset.json";
+import story from "@/assets/anewbeginning/story.jpg.asset.json";
+import life1 from "@/assets/anewbeginning/life1.jpg.asset.json";
+import life2 from "@/assets/anewbeginning/life2.jpg.asset.json";
+import life3 from "@/assets/anewbeginning/life3.jpg.asset.json";
+import life4 from "@/assets/anewbeginning/life4.jpg.asset.json";
+import life5 from "@/assets/anewbeginning/life5.jpg.asset.json";
+import life6 from "@/assets/anewbeginning/life6.jpg.asset.json";
 
 export const siteConfig = {
+  announcement: {
+    enabled: false, // flip true for a top banner (e.g., a special service)
+    text: "Join us this Sunday at 10:30 — there's a seat saved for you.",
+    ctaLabel: "Plan your visit",
+    ctaUrl: "#visit",
+  },
+
   church: {
-    name: "[CHURCH NAME]",
-    shortName: "[CHURCH]",
-    city: "[CITY, ST]",
-    tagline: "A welcoming home for people just like you.",
+    name: "A New Beginning Church",
+    shortName: "A New Beginning",
+    city: "Rushville, IN",
+    tagline: "Come as you are. Begin again.",
     mission:
-      "We're a church for anyone who's ever wondered if there's a place for them. There is — and it's right here.",
+      "A Spirit-led family of believers in Rushville, Indiana — anchored in God's Word, alive in the Gifts of the Spirit, and making room for anyone ready for a fresh start.",
     story: [
-      "[CHURCH NAME] started in [YEAR] with a handful of families and one quiet conviction: that anyone who walked through the doors should feel like they already belonged.",
-      "All these years later, that's still the heart of who we are. We're ordinary people — parents, grandparents, kids, college students, retirees — learning what it looks like to follow Jesus together in [CITY].",
+      "We're a Spirit-led church in Rushville — led by the Holy Spirit, grounded in the Holy Scriptures, and walking in the Gifts of the Spirit just as Paul described them in 1 Corinthians 12. We believe God still moves today, and we make room for Him to.",
+      "We're small enough that you won't slip through the cracks. When you walk in, you'll be welcomed, known, and prayed for by name. Whatever season you're in, there's room for a new beginning here. Join us Sundays at 10:30.",
     ],
-    foundedLine: "Serving [CITY] since [YEAR]",
+    foundedLine: "A church for Rushville",
   },
 
   brand: {
-    logoText: "[CHURCH]",
+    logoText: "A New Beginning",
     /**
-     * Hero media. Free mockups: leave type as "image" (videoSrc ignored).
-     * Live sites / paid builds: set type to "video" and point videoSrc at a
-     * compressed, muted, loopable .mp4/.webm. imageSrc is ALWAYS used as the
-     * poster, the mobile fallback, and the reduced-motion fallback.
+     * Optional logo image. Empty string = render the logoText wordmark.
+     * To use a real logo: upload to src/assets/anewbeginning/logo.png,
+     * create an asset pointer, import it, then set logoImageSrc: logoAsset.url.
      */
+    logoImageSrc: "",
+    storyImageSrc: story.url,
+
     heroMedia: {
       type: "image" as "image" | "video",
-      imageSrc: heroImage,
+      imageSrc: hero.url,
       videoSrc: "",
     },
-    storyImageSrc: storyImage,
   },
 
   service: {
-    timesShort: "Sundays · 9:00 & 10:45 AM",
+    timesShort: "Sundays · 10:30 AM",
     timesLong: [
-      { day: "Sunday", time: "9:00 AM" },
-      { day: "Sunday", time: "10:45 AM" },
+      { day: "Sunday", time: "10:30 AM" },
     ],
-    address: "[123 Street Name, City, ST 00000]",
+    address: "1024 S Old 3, Rushville, IN 46173",
     mapEmbedUrl:
-      "https://www.openstreetmap.org/export/embed.html?bbox=-97.7437%2C30.2660%2C-97.7372%2C30.2706&layer=mapnik",
-    mapLinkUrl: "https://www.google.com/maps",
+      "https://www.google.com/maps?q=1024+S+Old+3,+Rushville,+IN+46173&output=embed",
+    mapLinkUrl: "https://www.google.com/maps?q=1024+S+Old+3,+Rushville,+IN+46173",
     practical: [
-      { label: "Parking", value: "Free, right out front" },
-      { label: "Service length", value: "Around 70 minutes" },
-      { label: "What to wear", value: "Whatever you're comfortable in" },
+      { label: "Where", value: "1024 S Old 3, Rushville — easy to find, easy to park" },
+      { label: "Come expectant", value: "Our services are Spirit-led — come ready to meet with God" },
+      { label: "What to wear", value: "Come exactly as you are" },
     ],
   },
 
   expect: [
     {
       icon: "Heart" as const,
-      title: "You'll be welcomed, not cornered",
-      body: "A friendly hello at the door — and that's it. Nobody will single you out, ask you to stand, or put you on the spot.",
+      title: "You'll be welcomed like family",
+      body: "No crowd to get lost in. You'll be greeted, known, and prayed for by name — and genuinely glad you came.",
     },
     {
-      icon: "Clock" as const,
-      title: "About 70 minutes, start to finish",
-      body: "Music, a practical message from the Bible, and a few minutes to breathe. You'll know what's happening the whole time.",
+      icon: "BookOpen" as const,
+      title: "Rooted in God's Word",
+      body: "We don't change the Scriptures — we let them change us. Expect a message straight from the Bible that meets your real life.",
+    },
+    {
+      icon: "Users" as const,
+      title: "Walking in the Spirit, together",
+      body: "Led by the Holy Spirit and alive in the Gifts of the Spirit (1 Corinthians 12). Come expecting God to move.",
     },
     {
       icon: "Shirt" as const,
-      title: "Come as you are",
-      body: "Jeans, dress, t-shirt, suit — all of it shows up on Sunday. Wear what feels like you.",
-    },
-    {
-      icon: "Baby" as const,
-      title: "Your kids are in great hands",
-      body: "Safe, fun, age-appropriate spaces for newborns through 5th grade. Check-in is simple and we'll walk you through it.",
+      title: "Come exactly as you are",
+      body: "No dress code, no pretense, no perfect résumé required. Just come — a new beginning starts with one step in the door.",
     },
   ],
 
   life: [
-    { src: life1, alt: "Volunteers laughing while setting up the welcome table" },
-    { src: life2, alt: "Kids laughing during a craft in kids ministry" },
-    { src: life3, alt: "Worship inside the sanctuary" },
-    { src: life4, alt: "Two members hugging after service" },
-    { src: life5, alt: "A small group gathered in a living room" },
-    { src: life6, alt: "Volunteers serving meals in the community" },
+    { src: life1.url, alt: "An open Bible resting on a pew at A New Beginning Church" },
+    { src: life2.url, alt: "Hands joined in prayer" },
+    { src: life3.url, alt: "Worship setup in the sanctuary" },
+    { src: life4.url, alt: "A welcome table with coffee in the foyer" },
+    { src: life5.url, alt: "A simple wooden cross and candle" },
+    { src: life6.url, alt: "A country road leading to a small Indiana church" },
   ],
 
   ministries: [
-    { name: "Kids", line: "Sundays designed around your kids, not in spite of them." },
-    { name: "Students", line: "A place for middle and high schoolers to be known." },
-    { name: "Young Adults", line: "Real friendships for the in-between years." },
-    { name: "Small Groups", line: "Life is better in a circle of eight than a row of two hundred." },
-    { name: "Care & Counseling", line: "When life gets hard, you don't walk through it alone." },
-    { name: "Serve", line: "Find a spot to give back — in the church and across the city." },
+    { name: "Plan Your First Visit", line: "New here? This is your ramp. We'll tell you exactly what to expect and make your first Sunday easy." },
+    { name: "Rooted in the Word", line: "Bible-centered teaching for believers and seekers alike. Wherever you're starting from, you can grow here." },
+    { name: "Room for the Spirit", line: "We make space for the Holy Spirit to move — in worship, in prayer, and in the Gifts He gives His people." },
+    { name: "A Place to Begin Again", line: "However you arrive, there's room for a fresh start. Come as you are and take the next step with us." },
   ],
 
   events: [
     {
-      date: "This Sunday",
-      title: "Newcomer Welcome",
-      blurb: "First time here? Grab coffee with our team right after the service.",
+      date: "This Sunday · 10:30 AM",
+      title: "Join Us This Sunday",
+      blurb: "Come a few minutes early — we'll be watching for you and help you get settled.",
     },
     {
-      date: "Sat, [Date]",
-      title: "Community Workday",
-      blurb: "We're partnering with a local school for a morning of cleanup and care.",
-    },
-    {
-      date: "[Date]",
-      title: "Family Night",
-      blurb: "Food trucks, games, and a short message for the whole family.",
+      date: "Every week",
+      title: "New Here? Plan a Visit",
+      blurb: "Let us know you're coming and we'll have someone ready to welcome you by name.",
     },
   ],
 
   sermon: {
-    title: "[Latest Message Title]",
-    speaker: "[Speaker Name]",
-    series: "[Series Name]",
-    date: "[Recent Date]",
+    title: "Latest Message",
+    speaker: "Pastor [confirm name]",
+    series: "A New Beginning Church",
+    date: "On Facebook",
     summary:
-      "A short, practical look at what it means to follow Jesus in the middle of an ordinary week.",
-    embedUrl: "", // YouTube/FB/podcast embed
-    watchUrl: "#",
+      "Spirit-led and straight from the Word. Catch the latest message on Facebook, or join us in person this Sunday.",
+    embedUrl: "",
+    watchUrl: "https://www.facebook.com/p/A-New-Beginning-Ministry-61551913997354/",
   },
 
   give: {
-    line: "Every gift goes toward people — locally and around the world. Give online in about thirty seconds.",
+    line: "Every gift helps A New Beginning serve Rushville and reach more people with the hope of the gospel.",
     onlineUrl: "#",
   },
 
@@ -144,18 +146,19 @@ export const siteConfig = {
     enabled: false,
     eyebrow: "Meet us first",
     heading: "A quick hello before you visit.",
-    body: "We know visiting a new church can feel like a big step. So before you ever walk through the doors, here's a short hello from our team — who we are, and what Sunday looks like.",
-    posterSrc: storyImage,
+    body:
+      "Visiting a new church can feel like a big step. Here's a short hello so you know exactly who you'll be meeting on Sunday.",
+    posterSrc: story.url,
     embedUrl: "",
   },
 
   contact: {
-    phone: "[(000) 000-0000]",
-    email: "[hello@church.org]",
+    phone: "(765) 389-8013",
+    email: "anewbeginningrushville@gmail.com",
     socials: [
-      { label: "Facebook", url: "#" },
-      { label: "Instagram", url: "#" },
+      { label: "Facebook", url: "https://www.facebook.com/p/A-New-Beginning-Ministry-61551913997354/" },
       { label: "YouTube", url: "#" },
+      { label: "Instagram", url: "#" },
     ],
   },
 } as const;

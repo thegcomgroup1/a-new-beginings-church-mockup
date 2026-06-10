@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { AnnouncementBar } from "@/components/sections/AnnouncementBar";
 import { StickyHeader } from "@/components/sections/StickyHeader";
 import { Hero } from "@/components/sections/Hero";
 import { TimesLocation } from "@/components/sections/TimesLocation";
@@ -16,17 +17,17 @@ import { Footer } from "@/components/sections/Footer";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "[Church Name] — A welcoming home in [City]" },
+      { title: "A New Beginning Church — Rushville, IN" },
       {
         name: "description",
         content:
-          "Visiting for the first time? Here's everything you need — service times, what to expect, and how to plan your visit.",
+          "A Spirit-led church in Rushville, Indiana. Join us Sundays at 10:30 — come as you are, begin again.",
       },
-      { property: "og:title", content: "[Church Name] — A welcoming home in [City]" },
+      { property: "og:title", content: "A New Beginning Church — Rushville, IN" },
       {
         property: "og:description",
         content:
-          "Visiting for the first time? Here's everything you need — service times, what to expect, and how to plan your visit.",
+          "A Spirit-led church in Rushville, Indiana. Join us Sundays at 10:30 — come as you are, begin again.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -37,6 +38,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <AnnouncementBar />
       <StickyHeader />
       <main>
         <Hero />
