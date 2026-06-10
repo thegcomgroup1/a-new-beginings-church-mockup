@@ -1,41 +1,33 @@
+## Plan
 
-## A New Beginning Church — mockup swap
+1. Replace the placeholder brand imagery with the uploaded assets.
+   - Use the cross-with-vines-and-butterfly artwork as the site logo.
+   - Use the best church exterior photo as the homepage hero image.
+   - Use the service/pastor photo as the main story/about image.
 
-### 1. Generate atmospheric imagery
-Create 8 JPGs under `src/assets/anewbeginning/` using the agent image tool (warm, Spirit-led, small rural-Indiana church atmosphere — no AI-looking faces in close-up, no fake text/logos):
+2. Rebuild the gallery so it uses the real photos you approved.
+   - Keep the gallery grounded in the actual church by featuring the exterior, service, landscape, and sunset photos.
+   - Reassign image alt text so each photo is described accurately and feels intentional for visitors and search.
+   - Keep only the strongest visuals; remove filler placeholders where the real images are better.
 
-- `hero.jpg` — warm sunlit sanctuary interior, soft golden light through windows, empty wooden pews, inviting (16:9-ish, 1536×1024)
-- `story.jpg` — small congregation gathered in worship from the back, hands raised, warm lighting (1024×1024)
-- `life1.jpg`–`life6.jpg` — atmospheric: open Bible on a pew, hands joined in prayer, acoustic guitar + worship setup, coffee + greeting in a foyer, candles/cross detail, country road to a small church (varied 1024×1024)
+3. Update the site configuration to point to the real uploaded assets.
+   - Swap the current generated image references in `src/config/site.ts` for the uploaded files.
+   - Keep the existing content structure, announcement option, and church copy unless a photo mapping needs a small wording adjustment.
+   - Preserve the logo fallback behavior, but wire in the real logo so the header uses it immediately.
 
-Each upload via `lovable-assets create` → write a `.asset.json` pointer next to it so the imports in the new `site.ts` resolve.
+4. Clean up the current preview issue while implementing.
+   - Regenerate the routing output instead of relying on any manual route tree edits so the preview loads cleanly again.
+   - Verify the homepage renders with the new hero, logo, and updated photo sections.
 
-For the logo: do **not** generate. Leave `brand.logoImageSrc` empty so the header falls back to the text wordmark until Mark uploads the real cross+vine+butterfly PNG.
+## Image mapping
 
-### 2. Replace `src/config/site.ts`
-Drop in the ANB content from `ANB_site.ts` verbatim, with two adjustments:
-- Remove the `logoAsset` import (no logo file yet); set `brand.logoImageSrc: ""`.
-- Keep every other field as the user provided (announcement disabled, welcomeVideo disabled, sermon embed empty, giving URL `#`, pastor name placeholder).
+- **Logo:** cross + vines + butterfly artwork
+- **Hero:** church exterior photo
+- **Story/About:** pastor preaching photo
+- **Gallery/Life:** alternate exterior photo, mountain landscape, sunset photo, plus the strongest remaining church image placements
 
-### 3. Add `logoImageSrc` support to `StickyHeader`
-If `siteConfig.brand.logoImageSrc` is a non-empty string, render an `<img>` (with `logoText` as alt) instead of the text wordmark. Otherwise keep current text rendering. No layout shift — same header height.
+## Technical details
 
-### 4. Add opt-in `AnnouncementBar` capability
-- New component `src/components/sections/AnnouncementBar.tsx`. Renders nothing if `siteConfig.announcement.enabled !== true`. When enabled: thin bar above the sticky header with the configured `text` and a CTA link (`ctaLabel` → `ctaUrl`), styled with existing tokens (`bg-primary text-primary-foreground`).
-- Mount it in `src/routes/index.tsx` as the first child of the page wrapper, above `<StickyHeader />`.
-- Defaults stay `enabled: false`, so this is a no-op for the current mockup and any image-only church — flip one flag to turn on.
-
-### 5. Quiet fix
-The current hydration mismatch in the footer comes from the bracketed placeholder `[hello@church.org]` being parsed as a Markdown-style autolink in some environments. Once `site.ts` is replaced with the ANB email (`anewbeginningrushville@gmail.com`), the mismatch resolves on its own — no separate change needed.
-
-### Verification
-- Build passes.
-- Preview renders ANB name, tagline, Sunday 10:30 time, Rushville address with working Google Maps embed, atmospheric hero, and Facebook social link.
-- Header still shows "A New Beginning" wordmark (no logo image yet).
-- Announcement bar not visible (disabled).
-- Footer hydration error gone.
-
-### Technical notes
-- All 8 generated images use the agent `generate_image` tool (`standard` quality for hero, `fast` for the rest) → uploaded with `lovable-assets create --file ... --filename ....jpg > ....jpg.asset.json` so the `@/assets/anewbeginning/*.asset.json` imports in `site.ts` resolve at build time.
-- `StickyHeader` change is a single conditional render; no new props, all driven by config.
-- `AnnouncementBar` is a sibling, not nested inside the header — keeps sticky behavior unchanged.
+- Upload the attached images as project assets and use their asset URLs in the existing config-driven image system.
+- Reuse the current `StickyHeader`, `Hero`, `MissionStory`, and `LifeOfChurch` components rather than redesigning the layout.
+- Keep SEO and structure intact while updating image alt text and metadata relevance where needed.

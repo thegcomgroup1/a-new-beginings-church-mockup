@@ -10,14 +10,12 @@
  *  - Confirm "Church" vs "Ministry" wording with Mark.
  */
 
-import hero from "@/assets/anewbeginning/hero.jpg.asset.json";
-import story from "@/assets/anewbeginning/story.jpg.asset.json";
-import life1 from "@/assets/anewbeginning/life1.jpg.asset.json";
-import life2 from "@/assets/anewbeginning/life2.jpg.asset.json";
-import life3 from "@/assets/anewbeginning/life3.jpg.asset.json";
-import life4 from "@/assets/anewbeginning/life4.jpg.asset.json";
-import life5 from "@/assets/anewbeginning/life5.jpg.asset.json";
-import life6 from "@/assets/anewbeginning/life6.jpg.asset.json";
+import logo from "@/assets/anewbeginning/logo.png.asset.json";
+import servicePhoto from "@/assets/anewbeginning/service.jpg.asset.json";
+import churchHero from "@/assets/anewbeginning/church-hero.jpg.asset.json";
+import landscapePhoto from "@/assets/anewbeginning/landscape.jpg.asset.json";
+import sunsetPhoto from "@/assets/anewbeginning/sunset.jpg.asset.json";
+import churchFront from "@/assets/anewbeginning/church-front.jpg.asset.json";
 
 export const siteConfig = {
   announcement: {
@@ -43,17 +41,14 @@ export const siteConfig = {
 
   brand: {
     logoText: "A New Beginning",
-    /**
-     * Optional logo image. Empty string = render the logoText wordmark.
-     * To use a real logo: upload to src/assets/anewbeginning/logo.png,
-     * create an asset pointer, import it, then set logoImageSrc: logoAsset.url.
-     */
-    logoImageSrc: "",
-    storyImageSrc: story.url,
+    logoImageSrc: logo.url,
+    storyImageSrc: servicePhoto.url,
+    storyImageAlt: "A pastor preaching during a Sunday service at A New Beginning Church",
 
     heroMedia: {
       type: "image" as "image" | "video",
-      imageSrc: hero.url,
+      imageSrc: churchHero.url,
+      imageAlt: "A New Beginning Church in Rushville, Indiana on a bright Sunday afternoon",
       videoSrc: "",
     },
   },
@@ -98,12 +93,11 @@ export const siteConfig = {
   ],
 
   life: [
-    { src: life1.url, alt: "An open Bible resting on a pew at A New Beginning Church" },
-    { src: life2.url, alt: "Hands joined in prayer" },
-    { src: life3.url, alt: "Worship setup in the sanctuary" },
-    { src: life4.url, alt: "A welcome table with coffee in the foyer" },
-    { src: life5.url, alt: "A simple wooden cross and candle" },
-    { src: life6.url, alt: "A country road leading to a small Indiana church" },
+    { src: churchFront.url, alt: "Front view of A New Beginning Church in Rushville" },
+    { src: servicePhoto.url, alt: "A pastor preaching during a Sunday service at A New Beginning Church" },
+    { src: landscapePhoto.url, alt: "A scenic mountain landscape shared as part of the church's atmosphere and story" },
+    { src: sunsetPhoto.url, alt: "Sunset over open fields at dusk" },
+    { src: churchHero.url, alt: "Exterior side view of A New Beginning Church beneath a blue sky" },
   ],
 
   ministries: [
@@ -148,7 +142,7 @@ export const siteConfig = {
     heading: "A quick hello before you visit.",
     body:
       "Visiting a new church can feel like a big step. Here's a short hello so you know exactly who you'll be meeting on Sunday.",
-    posterSrc: story.url,
+    posterSrc: servicePhoto.url,
     embedUrl: "",
   },
 

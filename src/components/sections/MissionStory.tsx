@@ -23,7 +23,7 @@ export function MissionStory() {
             <div className="overflow-hidden rounded-2xl shadow-lg">
               <img
                 src={siteConfig.brand.storyImageSrc}
-                alt={`People of ${siteConfig.church.name} gathered together`}
+                alt={siteConfig.brand.storyImageAlt}
                 width={1280}
                 height={1024}
                 loading="lazy"
