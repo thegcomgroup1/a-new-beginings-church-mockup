@@ -13,9 +13,11 @@
 import logo from "@/assets/anewbeginning/logo.png.asset.json";
 import servicePhoto from "@/assets/anewbeginning/service.jpg.asset.json";
 import churchHero from "@/assets/anewbeginning/church-hero.jpg.asset.json";
-import landscapePhoto from "@/assets/anewbeginning/landscape.jpg.asset.json";
 import sunsetPhoto from "@/assets/anewbeginning/sunset.jpg.asset.json";
 import churchFront from "@/assets/anewbeginning/church-front.jpg.asset.json";
+import bandWorship from "@/assets/anewbeginning/band-worship.jpg.asset.json";
+import churchSign from "@/assets/anewbeginning/church-sign.jpg.asset.json";
+import jesusWagon from "@/assets/anewbeginning/jesus-wagon.jpg.asset.json";
 
 export const siteConfig = {
   announcement: {
@@ -94,10 +96,12 @@ export const siteConfig = {
 
   life: [
     { src: churchFront.url, alt: "Front view of A New Beginning Church in Rushville" },
+    { src: bandWorship.url, alt: "Worship team — keyboard, guitar and bass — leading praise on stage beneath the wooden cross" },
     { src: servicePhoto.url, alt: "A pastor preaching during a Sunday service at A New Beginning Church" },
-    { src: landscapePhoto.url, alt: "A scenic mountain landscape shared as part of the church's atmosphere and story" },
-    { src: sunsetPhoto.url, alt: "Sunset over open fields at dusk" },
+    { src: churchSign.url, alt: "A New Beginning church marquee: 'Salvation is free… bath included. Sun 10:30, Tue Thur 6'" },
+    { src: jesusWagon.url, alt: "'Chugging Along for Jesus' decorated parade wagon outside the church" },
     { src: churchHero.url, alt: "Exterior side view of A New Beginning Church beneath a blue sky" },
+    { src: sunsetPhoto.url, alt: "Sunset over open fields at dusk" },
   ],
 
   ministries: [
@@ -122,7 +126,7 @@ export const siteConfig = {
 
   sermon: {
     title: "Latest Message",
-    speaker: "Pastor [confirm name]",
+    speaker: "Pastor Mark Matthews",
     series: "A New Beginning Church",
     date: "On Facebook",
     summary:
