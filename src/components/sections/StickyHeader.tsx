@@ -18,9 +18,17 @@ export function StickyHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link to="/" hash="top" className="flex items-center gap-2">
-          <span className="font-display text-xl font-semibold text-secondary">
-            {siteConfig.brand.logoText}
-          </span>
+          {siteConfig.brand.logoImageSrc ? (
+            <img
+              src={siteConfig.brand.logoImageSrc}
+              alt={siteConfig.brand.logoText}
+              className="h-9 w-auto"
+            />
+          ) : (
+            <span className="font-display text-xl font-semibold text-secondary">
+              {siteConfig.brand.logoText}
+            </span>
+          )}
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
