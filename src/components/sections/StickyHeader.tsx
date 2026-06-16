@@ -4,9 +4,14 @@ import { Menu, X } from "lucide-react";
 import { PlanYourVisitButton } from "@/components/PlanYourVisitButton";
 import { siteConfig } from "@/config/site";
 
-const nav = [
+type NavItem =
+  | { label: string; hash: string; to?: undefined }
+  | { label: string; to: "/events"; hash?: undefined };
+
+const nav: NavItem[] = [
   { label: "New Here", hash: "new-here" },
   { label: "About", hash: "about" },
+  { label: "Events", to: "/events" },
   { label: "Times & Location", hash: "times" },
   { label: "Give", hash: "give" },
 ];
@@ -32,16 +37,26 @@ export function StickyHeader() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {nav.map((item) => (
-            <Link
-              key={item.hash}
-              to="/"
-              hash={item.hash}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {nav.map((item) =>
+            item.to ? (
+              <Link
+                key={item.label}
+                to={item.to}
+                className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <Link
+                key={item.label}
+                to="/"
+                hash={item.hash}
+                className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              >
+                {item.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -61,17 +76,28 @@ export function StickyHeader() {
       {open && (
         <div className="border-t border-border/60 bg-background md:hidden">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 sm:px-6">
-            {nav.map((item) => (
-              <Link
-                key={item.hash}
-                to="/"
-                hash={item.hash}
-                onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-3 text-base font-medium text-foreground/80 hover:bg-muted"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {nav.map((item) =>
+              item.to ? (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-3 text-base font-medium text-foreground/80 hover:bg-muted"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <Link
+                  key={item.label}
+                  to="/"
+                  hash={item.hash}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-3 text-base font-medium text-foreground/80 hover:bg-muted"
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
           </nav>
         </div>
       )}
