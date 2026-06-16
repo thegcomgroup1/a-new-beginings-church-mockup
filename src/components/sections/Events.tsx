@@ -1,4 +1,5 @@
 import { Calendar, ArrowRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { siteConfig } from "@/config/site";
 
 export function Events() {
@@ -14,13 +15,13 @@ export function Events() {
               Easy ways to drop in.
             </h2>
           </div>
-          <a
-            href="#"
+          <Link
+            to="/events"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-secondary hover:underline"
           >
             See all events
             <ArrowRight className="h-4 w-4" aria-hidden />
-          </a>
+          </Link>
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -35,13 +36,13 @@ export function Events() {
               </div>
               <h3 className="font-display text-xl font-semibold leading-snug">{e.title}</h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{e.blurb}</p>
-              <a
-                href="#"
+              <Link
+                to="/events"
                 className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-secondary hover:underline"
               >
                 Learn more
                 <ArrowRight className="h-4 w-4" aria-hidden />
-              </a>
+              </Link>
             </article>
           ))}
         </div>
