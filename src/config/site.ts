@@ -18,6 +18,8 @@ import churchFront from "@/assets/anewbeginning/church-front.jpg.asset.json";
 import bandWorship from "@/assets/anewbeginning/band-worship.jpg.asset.json";
 import churchSign from "@/assets/anewbeginning/church-sign.jpg.asset.json";
 import jesusWagon from "@/assets/anewbeginning/jesus-wagon.jpg.asset.json";
+import gathering from "@/assets/anewbeginning/brand-2.jpg.asset.json";
+import churchPhoto from "@/assets/anewbeginning/brand-3.jpg.asset.json";
 
 export const siteConfig = {
   announcement: {
@@ -58,7 +60,10 @@ export const siteConfig = {
   service: {
     timesShort: "Sundays · 10:30 AM",
     timesLong: [
-      { day: "Sunday", time: "10:30 AM" },
+      { day: "Sunday Worship", time: "10:30 AM" },
+      { day: "Monday Women's Study", time: "5:30 PM" },
+      { day: "Tuesday Bible Discussion", time: "6:00 PM" },
+      { day: "Wednesday Prayer Night", time: "6:00 PM" },
     ],
     address: "1024 S Old 3, Rushville, IN 46173",
     mapEmbedUrl:
@@ -100,7 +105,8 @@ export const siteConfig = {
     { src: servicePhoto.url, alt: "A pastor preaching during a Sunday service at A New Beginning Church" },
     { src: churchSign.url, alt: "A New Beginning church marquee: 'Salvation is free… bath included. Sun 10:30, Tue Thur 6'" },
     { src: jesusWagon.url, alt: "'Chugging Along for Jesus' decorated parade wagon outside the church" },
-    { src: churchHero.url, alt: "Exterior side view of A New Beginning Church beneath a blue sky" },
+    { src: gathering.url, alt: "A New Beginning church family gathered together for worship and teaching" },
+    { src: churchPhoto.url, alt: "A New Beginning Church building exterior in Rushville, Indiana" },
     { src: sunsetPhoto.url, alt: "Sunset over open fields at dusk" },
   ],
 
@@ -126,18 +132,18 @@ export const siteConfig = {
 
   sermon: {
     title: "Latest Message",
-    speaker: "Pastor Mark Matthews",
+    speaker: "Pastor Mark Mathews",
     series: "A New Beginning Church",
-    date: "On Facebook",
+    date: "On YouTube",
     summary:
-      "Spirit-led and straight from the Word. Catch the latest message on Facebook, or join us in person this Sunday.",
+      "Spirit-led and straight from the Word. Watch the latest message on YouTube, or join us in person this Sunday.",
     embedUrl: "",
-    watchUrl: "https://www.facebook.com/p/A-New-Beginning-Ministry-61551913997354/",
+    watchUrl: "https://www.youtube.com/@AnewbeginningRushville",
   },
 
   give: {
-    line: "Every gift helps A New Beginning serve Rushville and reach more people with the hope of the gospel.",
-    onlineUrl: "#",
+    line: "We don't have online giving set up yet. If you'd like to support the ministry, reach out and we'll point you the right direction.",
+    onlineUrl: "mailto:anewbeginningrushville@gmail.com",
   },
 
   welcomeVideo: {
@@ -155,8 +161,7 @@ export const siteConfig = {
     email: "anewbeginningrushville@gmail.com",
     socials: [
       { label: "Facebook", url: "https://www.facebook.com/p/A-New-Beginning-Ministry-61551913997354/" },
-      { label: "YouTube", url: "#" },
-      { label: "Instagram", url: "#" },
+      { label: "YouTube", url: "https://www.youtube.com/@AnewbeginningRushville" },
     ],
   },
 } as const;

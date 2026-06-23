@@ -6,14 +6,14 @@ import { siteConfig } from "@/config/site";
 
 type NavItem =
   | { label: string; hash: string; to?: undefined }
-  | { label: string; to: "/events"; hash?: undefined };
+  | { label: string; to: "/about" | "/events" | "/watch" | "/resources"; hash?: undefined };
 
 const nav: NavItem[] = [
-  { label: "New Here", hash: "new-here" },
-  { label: "About", hash: "about" },
+  { label: "About", to: "/about" },
   { label: "Events", to: "/events" },
+  { label: "Watch", to: "/watch" },
+  { label: "Resources", to: "/resources" },
   { label: "Times & Location", hash: "times" },
-  { label: "Give", hash: "give" },
 ];
 
 export function StickyHeader() {
