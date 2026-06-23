@@ -1,4 +1,4 @@
-import { Heart } from "lucide-react";
+import { Heart, Mail } from "lucide-react";
 import { siteConfig } from "@/config/site";
 
 export function Give() {
@@ -9,16 +9,17 @@ export function Give() {
           <Heart className="h-5 w-5" aria-hidden />
         </div>
         <h2 className="mt-5 font-display text-3xl font-semibold md:text-4xl lg:text-5xl">
-          Generosity, made simple.
+          Support the ministry.
         </h2>
         <p className="mt-4 text-base text-muted-foreground md:text-lg">
           {siteConfig.give.line}
         </p>
         <a
           href={siteConfig.give.onlineUrl}
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-md bg-primary px-7 text-base font-medium text-primary-foreground shadow-sm transition-all hover:brightness-110"
+          className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-primary px-7 text-base font-medium text-primary-foreground shadow-sm transition-all hover:brightness-110"
         >
-          Give online
+          <Mail className="h-4 w-4" aria-hidden />
+          Email us about giving
         </a>
       </div>
     </section>

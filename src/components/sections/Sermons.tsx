@@ -1,4 +1,5 @@
-import { Play } from "lucide-react";
+import { Play, ArrowRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { siteConfig } from "@/config/site";
 
 export function Sermons() {
@@ -29,13 +30,24 @@ export function Sermons() {
               <p className="mt-3 text-sm leading-relaxed text-secondary-foreground/85">
                 {sermon.summary}
               </p>
-              <a
-                href={sermon.watchUrl}
-                className="mt-5 inline-flex h-11 items-center gap-2 rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground transition-all hover:brightness-110"
-              >
-                <Play className="h-4 w-4" aria-hidden />
-                Watch the latest
-              </a>
+              <div className="mt-5 flex flex-wrap items-center gap-4">
+                <a
+                  href={sermon.watchUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground transition-all hover:brightness-110"
+                >
+                  <Play className="h-4 w-4" aria-hidden />
+                  Watch on YouTube
+                </a>
+                <Link
+                  to="/watch"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-secondary-foreground/90 hover:text-secondary-foreground"
+                >
+                  See more messages
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
+              </div>
             </div>
           </div>
 

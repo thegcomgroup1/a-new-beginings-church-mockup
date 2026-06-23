@@ -1,63 +1,113 @@
-## Events page for A New Beginning
 
-A dedicated `/events` route inspired by Eden Cove — featured event up top, then a monthly calendar grid, then a list view of what's on this month. Built around the weekly rhythms from their church sign, with a styled "Featured Event" slot ready for Mark to fill in.
+## Full build-out plan — from the survey
 
-### 1. New route — `src/routes/events.tsx`
+Goal from Mark: **visibility and visitor reach.** Two CSVs reviewed; second one (more complete) is authoritative. Below is everything that needs to change or get built.
 
-Full route with `head()` metadata (title: "Events — A New Beginning Church"; description + OG tags). Sections, top to bottom:
+---
 
-1. **Page intro** — eyebrow "What's happening", H1 "Come gather with us.", short line about all times being Eastern.
-2. **Featured Event hero** — large card with image, date, title, location, short blurb, and a "Plan your visit" CTA. Seeded with **"Join Us This Sunday — 10:30 AM Worship"** so it's never empty; easy to swap when Mark sends a special event.
-3. **Monthly calendar grid** — 7-column Sun–Sat grid for the current month with prev/next month buttons. Days that have events show a colored chip with the event title (truncated). Today is highlighted. Built in React with `date-fns` (already common in shadcn projects — confirm/install).
-4. **"Events in {Month}" list** — each event rendered as a row: date block on the left, title/time/location/blurb on the right, with a "Learn more" link (anchors to featured for now).
-5. **Closing CTA** — "Have an event idea? Reach out." with a mailto to `anewbeginningrushville@gmail.com`.
+### 1. Content corrections in `src/config/site.ts`
 
-### 2. Event data — `src/config/events.ts`
+A few facts in the current config don't match the survey — fixing first.
 
-New file exporting a typed `events` array so content is easy to edit:
+- **Pastor name**: "Pastor Mark Matthews" → **"Pastor Mark Mathews"** (single t).
+- **Service times**: currently only Sunday 10:30. Survey says:
+  - Sunday Worship — 10:30 AM
+  - Monday Women's Study — 5:30 PM
+  - Tuesday Bible Discussion — 6:00 PM
+  - Wednesday Prayer Night — 6:00 PM
+  (Note: this supersedes the older "Tue/Thu 6" on the church sign — using the survey as source of truth.)
+- **Tagline / first-visitor sentence**: weave in Mark's own line — *"A Spirit-filled, Spirit-led family doing God's will on earth."*
+- **Giving**: survey says no giving platform yet. Hide/soften the Give section (keep it as a "Support the ministry — contact us" card with the church email instead of a broken `#` link).
+- **Sermon source = YouTube**: switch sermon CTA from Facebook to the YouTube channel (`https://www.youtube.com/@AnewbeginningRushville`). Keep Facebook as a social link.
+- **Socials**: drop the Instagram placeholder (none provided). Keep Facebook + YouTube.
 
-```ts
-export type ChurchEvent = {
-  id: string;
-  title: string;
-  start: string;   // ISO date+time
-  end?: string;
-  location: string;
-  blurb: string;
-  featured?: boolean;
-  recurring?: "weekly-sun" | "weekly-tue" | "weekly-thu";
-  ctaLabel?: string;
-  ctaUrl?: string;
-};
+### 2. Pull in survey-provided media
+
+Survey provides 3 brand asset URLs and 4 leader photo URLs (LeadConnector — 307 redirect to signed Google Cloud Storage). I'll download each, inspect, and upload via `lovable-assets` so they become permanent CDN-hosted pointers. Files created:
+
 ```
+src/assets/anewbeginning/brand-1.{ext}.asset.json   (+ brand-2, brand-3 as needed — likely logo / wordmark / banner)
+src/assets/anewbeginning/leader-mark.jpg.asset.json
+src/assets/anewbeginning/leader-tammy.jpg.asset.json
+src/assets/anewbeginning/leader-answan.jpg.asset.json
+src/assets/anewbeginning/leader-lori.jpg.asset.json
+```
+Susan Vantrees has no photo — initials fallback in the Leaders grid.
 
-Seeded with three recurring entries (expanded into concrete dates by a helper):
-- **Sunday Worship** — Sundays 10:30 AM, 1024 S Old 3, Rushville
-- **Tuesday Gathering** — Tuesdays 6:00 PM
-- **Thursday Gathering** — Thursdays 6:00 PM
+If any brand asset is a better logo than the current one, swap `logoImageSrc`.
 
-Plus one **featured** placeholder pointing at the next upcoming Sunday so the hero is always populated. A helper `expandRecurring(monthDate)` returns concrete `Date` instances for the visible month — keeps the calendar/list in sync without hardcoding every week.
+### 3. New leaders data — `src/config/leaders.ts`
 
-### 3. Navigation — `src/components/sections/StickyHeader.tsx`
+Typed array with 5 entries (name, role, blurb, image). Used by the new About page and a homepage teaser strip.
 
-Add **Events** to the `nav` array as a real route link (`<Link to="/events">`), placed between "About" and "Times & Location". On the home page, the existing `Events` section's "See all events" link is wired to `/events`.
+### 4. New page — `/about` (`src/routes/about.tsx`)
 
-### 4. Footer (light touch)
+What-to-expect-style storytelling page focused on **who we are + who leads us**.
+Sections:
+1. **Hero strip** — eyebrow "About us", H1 *"A church for Rushville."*, lead paragraph from existing `church.story`.
+2. **What we believe** — short, scannable 3–4 card grid (Spirit-led, rooted in Scripture, Gifts of the Spirit, non-denominational, family-sized).
+3. **Meet our leaders** — responsive grid of all 5 leaders with photo (or initials fallback), name, role, blurb.
+4. **Closing CTA** — *"Come see for yourself this Sunday."* → links to `/#visit` + `/events`.
 
-If the footer has a links column, add an "Events" entry pointing to `/events`. Otherwise no change.
+Own `head()` metadata (title/description/og:title/og:description/og:image using the hero church photo).
 
-### 5. Styling
+### 5. New page — `/resources` (`src/routes/resources.tsx`)
 
-Reuses existing tokens (`border`, `card`, `primary`, `secondary`, `muted-foreground`, `font-display`). Calendar chip uses `bg-primary/10 text-primary`. No new colors, no hardcoded hex. Mobile: calendar collapses to a compact view (smaller day cells, chip becomes a dot; tap a day to scroll the list to that day).
+Survey says they want downloadable resources. Empty-but-classy page so it's ready to populate:
+- Hero with eyebrow "Resources" and intro line.
+- **Sermon notes / study guides** card group — `resources` array in a new `src/config/resources.ts` (each: title, kind, description, fileUrl, badge). Seeded with one placeholder ("Sunday Sermon Notes — coming soon") so the page never looks broken.
+- "What I'm reading" / **recommended reading** small list (placeholder, easy for Mark to fill).
+- Closing CTA — "Want something added here? Email us."
+
+Own `head()` metadata. New file type pattern: when `fileUrl === "#"`, render the card as a disabled "Coming soon" badge instead of a download link.
+
+### 6. New page — `/watch` (`src/routes/watch.tsx`)
+
+Survey: sermon source = YouTube, wants sermon video on homepage.
+- Hero with latest sermon embed (iframe to YouTube channel — uploads playlist). If we can't resolve a specific video, use the channel embed.
+- Grid of "more messages" placeholder cards that read from a small `src/config/sermons.ts` (title, date, youtubeId). Seeded with a "Watch latest on YouTube" CTA so it works the moment we get IDs.
+- Subscribe CTA → YouTube channel.
+
+Own `head()` metadata.
+
+### 7. Homepage updates
+
+- `Sermons` section: switch CTA from Facebook to YouTube; add a secondary link "See more messages →" → `/watch`.
+- `MissionStory` (or a new mini section): add a 4–6 leader teaser strip — small avatars, names, roles, "Meet our leaders →" → `/about#leaders`.
+- `Events` section: already links to `/events` — leaves as is.
+- `Give`: replaced with a softer "Support the ministry" card (email CTA, no broken giving link).
+
+### 8. Navigation — `src/components/sections/StickyHeader.tsx`
+
+Update desktop + mobile nav order to:
+`Home · About · Events · Watch · Resources · Visit (CTA)`
+All TanStack `<Link to=…>`.
+
+### 9. Footer — `src/components/sections/Footer.tsx`
+
+Add a sitemap column with About / Events / Watch / Resources / Visit. Update phone/email (already correct) and trim socials to Facebook + YouTube. Add the survey's one-liner mission under the wordmark.
+
+### 10. `events.ts` correction
+
+Current recurring uses Tue + Thu 6 PM. Update to survey: Sun 10:30 / Mon 5:30 (Women's Study) / Tue 6:00 (Bible Discussion) / Wed 6:00 (Prayer Night). Each gets its own title + blurb so calendar chips read correctly.
+
+### 11. Light SEO / metadata polish
+
+- Update `__root.tsx` favicon (use uploaded logo) and default title/description.
+- Each new route sets its own `og:title`, `og:description`, and a route-specific `og:image` (church hero or service photo).
+
+---
 
 ### Technical notes
 
-- TanStack route file `src/routes/events.tsx` with `createFileRoute("/events")` — route tree auto-regenerates.
-- Pure client-side rendering for the calendar (uses `useState` for visible month). Event data is static at build time, so SSR-safe.
-- `date-fns` for month math, day formatting, and recurring-date expansion. Install if not already present.
-- No backend, no auth, no DB — pure content/config change.
+- All new routes follow the existing pattern: `createFileRoute("/about")` etc.; route tree auto-regenerates.
+- Leader/brand binaries are pulled from LeadConnector signed URLs by following the 307 redirect, then uploaded via `lovable-assets create --file /tmp/x --filename …` so the codebase only ever contains `.asset.json` pointers.
+- No backend changes. No new dependencies (`date-fns` already added for `/events`).
+- All colors/typography continue using the existing semantic tokens — no hard-coded hex.
 
-### Out of scope (for now)
-- Event detail pages (each event links to the featured anchor for now).
-- Registration/ticketing.
-- Admin UI for editing events (still code-edited in `events.ts`).
+### Out of scope (track for later)
+
+- Phone app for the ministry (survey: "Yes, interested") — separate engagement.
+- Live giving integration (no provider yet — soft email CTA in the meantime).
+- Google Business Profile / Analytics / Search Console setup — HLPR ops task, not a code change.
+- Email marketing platform setup — same.

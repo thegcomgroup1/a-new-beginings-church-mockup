@@ -44,26 +44,37 @@ export const recurringEvents: RecurringDef[] = [
       "Our main Sunday gathering — Spirit-led worship, prayer, and a message straight from God's Word. Come as you are.",
   },
   {
-    id: "tuesday-gathering",
+    id: "monday-womens-study",
+    weekday: 1,
+    hour: 17,
+    minute: 30,
+    durationMin: 90,
+    title: "Women's Study",
+    location: RUSHVILLE_ADDRESS,
+    blurb:
+      "A weekly study just for the women of A New Beginning — friendship, prayer, and digging into the Word together.",
+  },
+  {
+    id: "tuesday-bible-discussion",
     weekday: 2,
     hour: 18,
     minute: 0,
     durationMin: 90,
-    title: "Tuesday Evening Gathering",
+    title: "Bible Discussion",
     location: RUSHVILLE_ADDRESS,
     blurb:
-      "A midweek gathering for worship, prayer, and the Word. Everyone welcome — bring a friend.",
+      "Open Bible discussion midweek. Bring your questions, your Bible, and a friend — all are welcome.",
   },
   {
-    id: "thursday-gathering",
-    weekday: 4,
+    id: "wednesday-prayer-night",
+    weekday: 3,
     hour: 18,
     minute: 0,
     durationMin: 90,
-    title: "Thursday Evening Gathering",
+    title: "Prayer Night",
     location: RUSHVILLE_ADDRESS,
     blurb:
-      "Press in midweek. Worship, prayer, and Spirit-led teaching as we grow together.",
+      "We press in together for our church, our families, and our city. Come pray — bring whatever's on your heart.",
   },
 ];
 
