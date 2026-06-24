@@ -133,6 +133,7 @@ function SermonCard({ sermon }: { sermon: SermonClip }) {
     </a>
   );
 }
+
 function ArchiveCta() {
   return (
     <section className="border-t border-border/60 bg-muted/30 py-16 md:py-20">
