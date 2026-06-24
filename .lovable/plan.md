@@ -1,21 +1,22 @@
-## Goal
+I’ll fix the homepage placement by moving the live YouTube embed into the existing `Sermons` section where the `[Sermon video embed]` placeholder currently is.
 
-Stop hosting/showing placeholder sermon thumbnails on `/watch`. Drive traffic to the YouTube channel for the full archive. Only the real latest video (already pulled from RSS) stays embedded.
+Plan:
+1. Update `src/routes/index.tsx`
+   - Remove the standalone `<LatestVideo />` block currently sitting right after the hero.
+   - Pass `latestVideo` into the existing `<Sermons />` section instead.
 
-## Changes
+2. Update `src/components/sections/Sermons.tsx`
+   - Replace the placeholder video box with the real latest YouTube embed using the RSS-powered video data.
+   - Update the sermon card title/date/watch link from the real latest video when available.
+   - Remove placeholder text like `[Sermon video embed]` entirely.
+   - If YouTube data fails to load, show no fake thumbnail or fake video placeholder.
 
-**`src/routes/watch.tsx`**
+3. Keep `/watch` intact
+   - The full archive still points traffic to YouTube.
+   - The `/watch` page can keep using the latest video feature and YouTube archive CTA.
 
-1. Delete the entire `MoreMessages` section and the `SermonCard` component (the grid of fake play-icon placeholders).
-2. Remove now-unused imports: `Play`, `Calendar`, `recentSermons`, `SermonClip`, and the `SermonCard` helper.
-3. Replace with a single "Full archive on YouTube" CTA block under the latest video:
-   - Heading: "The full archive lives on YouTube."
-   - Body: "We keep this page light and fast — head to our channel for every Sunday message, special services, and past teachings."
-   - Buttons: "Watch on YouTube" (primary, → `youtubeChannelUrl`) and "Subscribe" (outline, → channel `?sub_confirmation=1`).
-4. Keep `Intro`, `LatestVideo`, and `ServiceCta` exactly as they are.
-
-No other files change. `src/config/sermons.ts` stays in place (still used by other surfaces if any); only the `/watch` route stops rendering placeholder cards.
-
-## Result
-
-`/watch` shows: intro → real latest video (from YouTube RSS) → YouTube CTA → service CTA. No fake thumbnails, no placeholder play icons, no "we're working on cataloging more" language.
+Result:
+- Homepage keeps its original design structure.
+- The latest uploaded YouTube video appears in the designated homepage video spot.
+- No duplicate “front and center” video block after the hero.
+- No placeholders or fake video thumbnails.
