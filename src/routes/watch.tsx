@@ -1,11 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Play, Youtube, ArrowRight, Calendar } from "lucide-react";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { Play, ArrowRight, Calendar } from "lucide-react";
 import { AnnouncementBar } from "@/components/sections/AnnouncementBar";
 import { StickyHeader } from "@/components/sections/StickyHeader";
 import { Footer } from "@/components/sections/Footer";
+import { LatestVideo } from "@/components/sections/LatestVideo";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { recentSermons, youtubeChannelUrl, type SermonClip } from "@/config/sermons";
+import { getLatestVideo } from "@/lib/youtube.functions";
+
+const latestVideoQuery = queryOptions({
+  queryKey: ["latest-youtube-video"],
+  queryFn: () => getLatestVideo(),
+  staleTime: 10 * 60 * 1000,
+});
 
 export const Route = createFileRoute("/watch")({
   head: () => ({
@@ -27,17 +36,19 @@ export const Route = createFileRoute("/watch")({
       { name: "twitter:image", content: siteConfig.brand.heroMedia.imageSrc },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(latestVideoQuery),
   component: WatchPage,
 });
 
 function WatchPage() {
+  const { data: latestVideo } = useSuspenseQuery(latestVideoQuery);
   return (
     <div className="min-h-screen bg-background text-foreground">
       <AnnouncementBar />
       <StickyHeader />
       <main>
         <Intro />
-        <ChannelHero />
+        <LatestVideo video={latestVideo} />
         <MoreMessages />
         <ServiceCta />
       </main>
@@ -60,50 +71,6 @@ function Intro() {
           You don't have to wonder what we teach. Catch our most recent Sunday
           messages on YouTube and decide for yourself.
         </p>
-      </div>
-    </section>
-  );
-}
-
-function ChannelHero() {
-  return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-          <div className="grid gap-0 md:grid-cols-5">
-            <div
-              className="aspect-video w-full bg-cover bg-center md:col-span-3 md:aspect-auto"
-              style={{ backgroundImage: `url(${siteConfig.brand.heroMedia.imageSrc})` }}
-              role="img"
-              aria-label={siteConfig.brand.heroMedia.imageAlt}
-            />
-            <div className="flex flex-col justify-center p-8 md:col-span-2 md:p-10">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Youtube className="h-5 w-5" aria-hidden />
-              </div>
-              <h2 className="mt-4 font-display text-2xl font-semibold md:text-3xl">
-                A New Beginning on YouTube
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                Sunday messages from Pastor Mark Mathews, posted to our channel
-                after each service. Subscribe so you never miss one.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button asChild>
-                  <a href={youtubeChannelUrl} target="_blank" rel="noreferrer">
-                    <Play className="h-4 w-4" aria-hidden />
-                    Watch on YouTube
-                  </a>
-                </Button>
-                <Button asChild variant="outline">
-                  <a href={youtubeChannelUrl} target="_blank" rel="noreferrer">
-                    Subscribe
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
