@@ -1,25 +1,22 @@
 ## Current state
 
-The "Plan Your Visit" buttons in the header, hero, and other sections all link to `#plan-your-visit` on the home page, which scrolls to the form. That part works.
+The "Plan Your Visit" form on the homepage is wired to local React state only — when someone submits, they see "We've got you" but **no email is sent and nobody at the church is notified**. The buttons (header, hero, sticky CTA) all correctly scroll to the form, but the submission itself is a dead end.
 
-**The form itself does nothing.** On submit it just flips a local React state to show a "We've got you" thank-you message. No email is sent, nothing is stored, nobody at the church is notified. A real visitor filling it out would get a confirmation screen while the team never hears about it.
+To send real emails you need a sender domain. The project has none configured.
 
-## What I'll do
+## Recommended path
 
-Wire the form to Lovable's built-in email system so every submission:
-1. Emails the church (notification with visitor's name, email, when they're coming, note).
-2. Emails the visitor (friendly branded confirmation).
-3. Keeps the existing "We've got you" success UI.
+1. **You secure a domain for the church** (e.g. `anewbeginningchurch.org` or similar). You can buy one directly inside Lovable: Project Settings → Project → Domains → "Buy new domain". This is the cleanest option — domain becomes available immediately and DNS is managed inside Lovable.
+2. **Once the domain is connected**, come back and tell me it's ready. I'll then:
+   - Set up Lovable's email infrastructure on a subdomain like `notify.<yourdomain>`.
+   - Add two branded email templates:
+     - **Notification to the church** (sent to `anewbeginningrushville@gmail.com`) with the visitor's name, email, when they're coming, and any note.
+     - **Confirmation to the visitor** — warm welcome, service times, address, what to expect on Sunday.
+   - Add a public action endpoint that validates the form (Zod) and triggers both sends with idempotency keys (so retries don't double-send).
+   - Update the form to POST to that endpoint with a loading state, error handling, and only flip to the "We've got you" success view after the real send succeeds.
 
-### Steps
+## What I need from you to proceed
 
-1. **Set up email infrastructure** (one-time): provision the project's sender domain via the email setup dialog if not already done, then run the email infra + transactional scaffold.
-2. **Add two branded email templates** in `src/lib/email-templates/`:
-   - `visit-notification` — to the church inbox, with all form fields.
-   - `visit-confirmation` — to the visitor, warm welcome, service times + address.
-3. **Add a public action route** `src/routes/api/public/plan-visit.ts` that validates the form (Zod), then triggers both sends with idempotency keys. Public because the form is unauthenticated.
-4. **Update `PlanYourVisit.tsx`** to POST to that route, show a loading state on the button, handle errors, and only flip to the success view after the request succeeds.
+Just confirm once the domain is connected in Project Settings → Domains and shows status "Active" (or "Ready"). Then I'll handle steps 2 in full — no more questions needed; I'll use `anewbeginningrushville@gmail.com` (already in your site config) as the notification recipient.
 
-### One thing I need from you
-
-What email address should receive the visit notifications? (e.g. pastor's email, office inbox.) I'll wire it in as the recipient for the notification template.
+If you'd rather use a domain you already own elsewhere, that works too — connect it via Project Settings → Domains → "Connect Domain" and follow the DNS instructions.
