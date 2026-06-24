@@ -1,22 +1,25 @@
-I’ll fix the homepage placement by moving the live YouTube embed into the existing `Sermons` section where the `[Sermon video embed]` placeholder currently is.
+## Current state
 
-Plan:
-1. Update `src/routes/index.tsx`
-   - Remove the standalone `<LatestVideo />` block currently sitting right after the hero.
-   - Pass `latestVideo` into the existing `<Sermons />` section instead.
+The "Plan Your Visit" buttons in the header, hero, and other sections all link to `#plan-your-visit` on the home page, which scrolls to the form. That part works.
 
-2. Update `src/components/sections/Sermons.tsx`
-   - Replace the placeholder video box with the real latest YouTube embed using the RSS-powered video data.
-   - Update the sermon card title/date/watch link from the real latest video when available.
-   - Remove placeholder text like `[Sermon video embed]` entirely.
-   - If YouTube data fails to load, show no fake thumbnail or fake video placeholder.
+**The form itself does nothing.** On submit it just flips a local React state to show a "We've got you" thank-you message. No email is sent, nothing is stored, nobody at the church is notified. A real visitor filling it out would get a confirmation screen while the team never hears about it.
 
-3. Keep `/watch` intact
-   - The full archive still points traffic to YouTube.
-   - The `/watch` page can keep using the latest video feature and YouTube archive CTA.
+## What I'll do
 
-Result:
-- Homepage keeps its original design structure.
-- The latest uploaded YouTube video appears in the designated homepage video spot.
-- No duplicate “front and center” video block after the hero.
-- No placeholders or fake video thumbnails.
+Wire the form to Lovable's built-in email system so every submission:
+1. Emails the church (notification with visitor's name, email, when they're coming, note).
+2. Emails the visitor (friendly branded confirmation).
+3. Keeps the existing "We've got you" success UI.
+
+### Steps
+
+1. **Set up email infrastructure** (one-time): provision the project's sender domain via the email setup dialog if not already done, then run the email infra + transactional scaffold.
+2. **Add two branded email templates** in `src/lib/email-templates/`:
+   - `visit-notification` — to the church inbox, with all form fields.
+   - `visit-confirmation` — to the visitor, warm welcome, service times + address.
+3. **Add a public action route** `src/routes/api/public/plan-visit.ts` that validates the form (Zod), then triggers both sends with idempotency keys. Public because the form is unauthenticated.
+4. **Update `PlanYourVisit.tsx`** to POST to that route, show a loading state on the button, handle errors, and only flip to the success view after the request succeeds.
+
+### One thing I need from you
+
+What email address should receive the visit notifications? (e.g. pastor's email, office inbox.) I'll wire it in as the recipient for the notification template.
