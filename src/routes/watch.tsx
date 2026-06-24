@@ -133,6 +133,39 @@ function SermonCard({ sermon }: { sermon: SermonClip }) {
     </a>
   );
 }
+function ArchiveCta() {
+  return (
+    <section className="border-t border-border/60 bg-muted/30 py-16 md:py-20">
+      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+        <h2 className="font-display text-3xl font-semibold md:text-4xl">
+          The full archive lives on YouTube.
+        </h2>
+        <p className="mt-4 text-base text-muted-foreground md:text-lg">
+          We keep this page light and fast — head to our channel for every Sunday
+          message, special service, and past teaching.
+        </p>
+        <div className="mt-7 flex flex-wrap justify-center gap-3">
+          <Button asChild>
+            <a href={youtubeChannelUrl} target="_blank" rel="noreferrer">
+              <Youtube className="h-4 w-4" aria-hidden />
+              Watch on YouTube
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </a>
+          </Button>
+          <Button asChild variant="outline">
+            <a
+              href={`${youtubeChannelUrl}?sub_confirmation=1`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Subscribe
+            </a>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function ServiceCta() {
   return (
