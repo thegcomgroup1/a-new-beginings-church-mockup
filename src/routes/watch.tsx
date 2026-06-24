@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { Play, ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Youtube } from "lucide-react";
 import { AnnouncementBar } from "@/components/sections/AnnouncementBar";
 import { StickyHeader } from "@/components/sections/StickyHeader";
 import { Footer } from "@/components/sections/Footer";
 import { LatestVideo } from "@/components/sections/LatestVideo";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { recentSermons, youtubeChannelUrl, type SermonClip } from "@/config/sermons";
+import { youtubeChannelUrl } from "@/config/sermons";
 import { getLatestVideo } from "@/lib/youtube.functions";
 
 const latestVideoQuery = queryOptions({
@@ -49,7 +49,7 @@ function WatchPage() {
       <main>
         <Intro />
         <LatestVideo video={latestVideo} />
-        <MoreMessages />
+        <ArchiveCta />
         <ServiceCta />
       </main>
       <Footer />
