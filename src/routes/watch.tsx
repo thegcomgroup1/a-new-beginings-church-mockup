@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { Play, ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Youtube } from "lucide-react";
 import { AnnouncementBar } from "@/components/sections/AnnouncementBar";
 import { StickyHeader } from "@/components/sections/StickyHeader";
 import { Footer } from "@/components/sections/Footer";
 import { LatestVideo } from "@/components/sections/LatestVideo";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { recentSermons, youtubeChannelUrl, type SermonClip } from "@/config/sermons";
+import { youtubeChannelUrl } from "@/config/sermons";
 import { getLatestVideo } from "@/lib/youtube.functions";
 
 const latestVideoQuery = queryOptions({
@@ -49,7 +49,7 @@ function WatchPage() {
       <main>
         <Intro />
         <LatestVideo video={latestVideo} />
-        <MoreMessages />
+        <ArchiveCta />
         <ServiceCta />
       </main>
       <Footer />
@@ -76,61 +76,38 @@ function Intro() {
   );
 }
 
-function MoreMessages() {
+
+function ArchiveCta() {
   return (
     <section className="border-t border-border/60 bg-muted/30 py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="font-display text-3xl font-semibold md:text-4xl">More messages</h2>
-        <p className="mt-3 max-w-2xl text-base text-muted-foreground md:text-lg">
-          We're working on getting more messages cataloged here. Until then, the
-          full archive lives on YouTube.
+      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+        <h2 className="font-display text-3xl font-semibold md:text-4xl">
+          The full archive lives on YouTube.
+        </h2>
+        <p className="mt-4 text-base text-muted-foreground md:text-lg">
+          We keep this page light and fast — head to our channel for every Sunday
+          message, special service, and past teaching.
         </p>
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {recentSermons.map((s) => (
-            <SermonCard key={s.id} sermon={s} />
-          ))}
+        <div className="mt-7 flex flex-wrap justify-center gap-3">
+          <Button asChild>
+            <a href={youtubeChannelUrl} target="_blank" rel="noreferrer">
+              <Youtube className="h-4 w-4" aria-hidden />
+              Watch on YouTube
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </a>
+          </Button>
+          <Button asChild variant="outline">
+            <a
+              href={`${youtubeChannelUrl}?sub_confirmation=1`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Subscribe
+            </a>
+          </Button>
         </div>
       </div>
     </section>
-  );
-}
-
-function SermonCard({ sermon }: { sermon: SermonClip }) {
-  const target = sermon.youtubeId
-    ? `https://www.youtube.com/watch?v=${sermon.youtubeId}`
-    : youtubeChannelUrl;
-  return (
-    <a
-      href={target}
-      target="_blank"
-      rel="noreferrer"
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow hover:shadow-md"
-    >
-      <div className="relative aspect-video w-full bg-gradient-to-br from-secondary/80 to-secondary">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-background/90 text-secondary shadow-md transition-transform group-hover:scale-105">
-            <Play className="h-6 w-6" aria-hidden />
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <Calendar className="h-3.5 w-3.5" aria-hidden />
-          {sermon.date}
-        </div>
-        <h3 className="mt-2 font-display text-xl font-semibold">{sermon.title}</h3>
-        <p className="mt-1 text-sm font-medium text-primary">{sermon.speaker}</p>
-        {sermon.blurb && (
-          <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-            {sermon.blurb}
-          </p>
-        )}
-        <span className="mt-5 inline-flex items-center gap-1.5 self-start text-sm font-medium text-secondary group-hover:underline">
-          Watch on YouTube
-          <ArrowRight className="h-4 w-4" aria-hidden />
-        </span>
-      </div>
-    </a>
   );
 }
 
