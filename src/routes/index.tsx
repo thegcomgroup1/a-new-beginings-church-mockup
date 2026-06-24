@@ -3,7 +3,6 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { AnnouncementBar } from "@/components/sections/AnnouncementBar";
 import { StickyHeader } from "@/components/sections/StickyHeader";
 import { Hero } from "@/components/sections/Hero";
-import { LatestVideo } from "@/components/sections/LatestVideo";
 import { TimesLocation } from "@/components/sections/TimesLocation";
 import { WhatToExpect } from "@/components/sections/WhatToExpect";
 import { MissionStory } from "@/components/sections/MissionStory";
@@ -53,7 +52,6 @@ function Index() {
       <StickyHeader />
       <main>
         <Hero />
-        <LatestVideo video={latestVideo} />
         <TimesLocation />
         <WhatToExpect />
         <MissionStory />
@@ -61,7 +59,7 @@ function Index() {
         <LifeOfChurch />
         <Ministries />
         <Events />
-        <Sermons />
+        <Sermons latestVideo={latestVideo} />
         <Give />
         <PlanYourVisit />
       </main>
