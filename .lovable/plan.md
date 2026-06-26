@@ -1,58 +1,53 @@
-## 1. Fix the build first
+## Plan Your Visit — Email Sequence
 
-The recent `@tanstack/react-start` upgrade (1.168.26) pulled ahead of `@tanstack/react-router` (router-core 1.168.17), which is missing the `getScriptPreloadAttrs` export the newer start runtime needs. Align all TanStack packages to the latest matching minor:
+Wire the homepage "Plan Your Visit" form to send two real emails on submit, then send a test to confirm delivery end-to-end.
 
-- Upgrade `@tanstack/react-router` and `@tanstack/router-plugin` to the latest 1.168.x.
-- Re-run the dev build to confirm the SSR bundle resolves cleanly.
+### What gets built
 
-No app code changes are required for this step.
+**1. Email templates** (React Email, under `src/lib/email-templates/`)
 
-## 2. Plan a Visit email sequence
+- `plan-visit-visitor.tsx` — warm confirmation to the visitor.
+  - Subject: "We're so glad you're planning to visit — A New Beginning Church"
+  - Greets by first name, restates service time (Sun 10:30am) + address, sets expectations ("look for someone at the door, no pressure"), signed from Pastor Mark Mathews.
+- `plan-visit-notify.tsx` — internal notification to the church.
+  - Subject: "New visitor planning to attend — {name}"
+  - Sent to `anewbeginningrushville@gmail.com` with name, email, when-they're-coming, and any notes.
+- Both registered in `src/lib/email-templates/registry.ts`.
 
-Now that `anewbeginningchurch.org` is connected, set up Lovable's built-in email infrastructure on a delegated subdomain (e.g. `notify.anewbeginningchurch.org`) and send two emails every time the homepage form is submitted:
+**2. Public submission endpoint**
 
-**Email A — Visitor confirmation** (to the person filling out the form)
-- Subject: "We're so glad you're coming — A New Beginning Church"
-- Warm note from Pastor Mark, Sunday service time (10:30 AM), address with Google Maps link, what to expect (casual dress, coffee, kids welcome), a "reply to this email if you have questions" line.
-- From: `hello@anewbeginningchurch.org`, reply-to: `anewbeginningrushville@gmail.com`.
+- New file route `src/routes/api/public/plan-visit.ts` (POST).
+- Validates body with zod: `name` (1–100), `email` (valid, ≤255), `when` (≤200, optional), `note` (≤1000, optional).
+- Generates one `submissionId` and enqueues both emails via internal call to `/lovable/email/transactional/send` (service-role auth) with idempotency keys `plan-visit-visitor-{id}` and `plan-visit-notify-{id}`.
+- Returns `{ ok: true }` or `{ ok: false, error }`.
+- CORS not needed (same-origin).
 
-**Email B — Church notification** (to `anewbeginningrushville@gmail.com`)
-- Subject: "New visitor planning to visit — {name}"
-- Full submission details (name, email, when, optional note), submission timestamp, a "reply to visitor" mailto link prefilled with the visitor's email.
+**3. Form wiring** (`src/components/sections/PlanYourVisit.tsx`)
 
-### How it wires together
+- Convert `onSubmit` to async: POST JSON to `/api/public/plan-visit`.
+- Loading state (button shows "Sending…", disabled).
+- On success: existing success panel.
+- On error: inline error message + keep form values so the user can retry.
+- Client-side zod validation mirroring server schema.
 
-```text
-Homepage form (PlanYourVisit.tsx)
-   │  POSTs JSON to
-   ▼
-/api/public/plan-visit  (TSS server route)
-   │  validates with Zod, then
-   ├──► sendTransactionalEmail("visit-confirmation", visitor)
-   └──► sendTransactionalEmail("visit-notification", church inbox)
-   │
-   ▼  enqueues into pgmq
-process-email-queue cron → Lovable Emails → recipient inbox
-```
+**4. Verify delivery**
 
-### Steps
-
-1. **Email domain** — open the email setup dialog so you can pick the sender subdomain on `anewbeginningchurch.org` and add the NS records. (Required prereq; nothing else proceeds until DNS is in.)
-2. **Infrastructure** — provision the email queue, suppression list, unsubscribe tokens, and cron job.
-3. **Templates** — scaffold the transactional email system, then add two branded React Email templates (`visit-confirmation`, `visit-notification`) styled to match the site (warm cream/green palette, serif display headings).
-4. **Public submit route** — create `src/routes/api/public/plan-visit.ts` that validates input (name ≤ 100, email, when ≤ 200, note ≤ 1000), enqueues both emails with an idempotency key derived from email + timestamp, and returns `{ ok: true }`.
-5. **Form** — convert `PlanYourVisit.tsx` to POST to that route with proper loading/error states, keep the existing "We've got you" success screen, and show an inline error if the request fails.
-6. **Unsubscribe page** — scaffold the branded `/email/unsubscribe` page at whatever path the tool reports.
+- After deploy, POST a test payload to `/api/public/plan-visit` with my email of choice — confirm by:
+  1. HTTP 200 response.
+  2. Two rows in `email_send_log` with status `sent` (one per template).
+- Report results back to you with the actual log rows.
 
 ### Technical notes
 
-- Public route at `/api/public/plan-visit` so it works without a Supabase session.
-- Zod validation runs server-side; client validation is just for UX.
-- Idempotency keys (`visit-confirm-{email}-{ts}` / `visit-notify-{email}-{ts}`) prevent duplicate sends on retry.
-- Emails are queued, not sent inline — submission stays fast and retries are automatic.
-- No database table is added; if you later want a visitor log, that's a follow-up.
+- Templates follow the existing `TemplateEntry` shape — white body, brand-consistent inline styles pulled from `src/styles.css`, no unsubscribe footer (auto-appended).
+- The notify email's recipient is hardcoded to `siteConfig.contact.email` server-side, not taken from the form — prevents abuse.
+- Idempotency keys ensure double-submits don't double-send.
+- Suppression list is checked automatically by the send route.
 
-### What I'll need from you mid-flow
+### What I need from you
 
-- Complete the email domain setup dialog (pick subdomain, add NS records at the registrar). I'll pause and resume once that's done.
-- Confirm the visitor email should come from `hello@anewbeginningchurch.org` (or tell me a different sender like `visit@…`).
+Nothing — domain is verified, infra is provisioned, packages are installed. Approving this plan kicks off implementation + the live test send.
+
+### Confirm before I test
+
+Which email should I use for the test submission? (I'll use it as the "visitor" address; the church notification always goes to `anewbeginningrushville@gmail.com`.)
