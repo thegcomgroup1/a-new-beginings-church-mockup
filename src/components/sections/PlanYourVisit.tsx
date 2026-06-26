@@ -4,10 +4,43 @@ import { siteConfig } from "@/config/site";
 
 export function PlanYourVisit() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    if (submitting) return;
+    setError(null);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      when: String(data.get("when") || "").trim(),
+      note: String(data.get("note") || "").trim(),
+    };
+    if (!payload.name || !payload.email) {
+      setError("Please share your name and email so we can reach back out.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/public/plan-visit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !json.ok) {
+        setError(json.error || "Something went wrong. Please try again in a moment.");
+        setSubmitting(false);
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError("Network error. Please try again.");
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -71,7 +104,7 @@ export function PlanYourVisit() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="space-y-5">
+              <form onSubmit={onSubmit} className="space-y-5" noValidate>
                 <div>
                   <label htmlFor="name" className="text-sm font-medium">Your name</label>
                   <input
@@ -106,10 +139,16 @@ export function PlanYourVisit() {
                 </div>
                 <button
                   type="submit"
-                  className="inline-flex h-12 w-full items-center justify-center rounded-md bg-primary px-6 text-base font-medium text-primary-foreground shadow-sm transition-all hover:brightness-110"
+                  disabled={submitting}
+                  className="inline-flex h-12 w-full items-center justify-center rounded-md bg-primary px-6 text-base font-medium text-primary-foreground shadow-sm transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  I'm planning to visit
+                  {submitting ? "Sending…" : "I'm planning to visit"}
                 </button>
+                {error ? (
+                  <p className="text-center text-sm text-destructive" role="alert">
+                    {error}
+                  </p>
+                ) : null}
                 <p className="text-center text-xs text-muted-foreground">
                   We'll never share your info. No spam, ever.
                 </p>
