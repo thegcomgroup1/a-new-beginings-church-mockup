@@ -1,53 +1,28 @@
-## Plan Your Visit — Email Sequence
+## Test the Plan Your Visit email flow
 
-Wire the homepage "Plan Your Visit" form to send two real emails on submit, then send a test to confirm delivery end-to-end.
+Now that the site is published, we can fire a real submission against the live endpoint and confirm both emails land.
 
-### What gets built
+### How I'll test
 
-**1. Email templates** (React Email, under `src/lib/email-templates/`)
+1. **POST a test submission** to `https://a-new-beginning-church.lovable.app/api/public/plan-visit` with a realistic payload (name, email, "when", note). I'll use an email address you give me as the visitor.
+2. **Check the response** — expect `{ ok: true, submissionId: "..." }` with HTTP 200.
+3. **Query `email_send_log`** for the two rows tied to that submission (`plan-visit-visitor-{id}` and `plan-visit-notify-{id}`) and report their status (`pending` → `sent`, or `failed`/`dlq` with the error message if anything goes wrong).
+4. **Confirm inbox delivery**:
+   - Visitor confirmation → the test email you provide
+   - Church notification → `anewbeginningrushville@gmail.com`
 
-- `plan-visit-visitor.tsx` — warm confirmation to the visitor.
-  - Subject: "We're so glad you're planning to visit — A New Beginning Church"
-  - Greets by first name, restates service time (Sun 10:30am) + address, sets expectations ("look for someone at the door, no pressure"), signed from Pastor Mark Mathews.
-- `plan-visit-notify.tsx` — internal notification to the church.
-  - Subject: "New visitor planning to attend — {name}"
-  - Sent to `anewbeginningrushville@gmail.com` with name, email, when-they're-coming, and any notes.
-- Both registered in `src/lib/email-templates/registry.ts`.
+If anything fails, I'll inspect the `error_message` column and the queue state, fix it, and re-run.
 
-**2. Public submission endpoint**
+### Alternative: test through the live UI
 
-- New file route `src/routes/api/public/plan-visit.ts` (POST).
-- Validates body with zod: `name` (1–100), `email` (valid, ≤255), `when` (≤200, optional), `note` (≤1000, optional).
-- Generates one `submissionId` and enqueues both emails via internal call to `/lovable/email/transactional/send` (service-role auth) with idempotency keys `plan-visit-visitor-{id}` and `plan-visit-notify-{id}`.
-- Returns `{ ok: true }` or `{ ok: false, error }`.
-- CORS not needed (same-origin).
+If you'd rather click through it like a real visitor:
+1. Open https://a-new-beginning-church.lovable.app
+2. Scroll to "Plan your visit," fill in your name + email, submit
+3. Tell me when you've submitted and I'll pull the matching `email_send_log` rows and report status
 
-**3. Form wiring** (`src/components/sections/PlanYourVisit.tsx`)
-
-- Convert `onSubmit` to async: POST JSON to `/api/public/plan-visit`.
-- Loading state (button shows "Sending…", disabled).
-- On success: existing success panel.
-- On error: inline error message + keep form values so the user can retry.
-- Client-side zod validation mirroring server schema.
-
-**4. Verify delivery**
-
-- After deploy, POST a test payload to `/api/public/plan-visit` with my email of choice — confirm by:
-  1. HTTP 200 response.
-  2. Two rows in `email_send_log` with status `sent` (one per template).
-- Report results back to you with the actual log rows.
-
-### Technical notes
-
-- Templates follow the existing `TemplateEntry` shape — white body, brand-consistent inline styles pulled from `src/styles.css`, no unsubscribe footer (auto-appended).
-- The notify email's recipient is hardcoded to `siteConfig.contact.email` server-side, not taken from the form — prevents abuse.
-- Idempotency keys ensure double-submits don't double-send.
-- Suppression list is checked automatically by the send route.
+Either path works — the API call is faster, the UI path also validates the form wiring.
 
 ### What I need from you
 
-Nothing — domain is verified, infra is provisioned, packages are installed. Approving this plan kicks off implementation + the live test send.
-
-### Confirm before I test
-
-Which email should I use for the test submission? (I'll use it as the "visitor" address; the church notification always goes to `anewbeginningrushville@gmail.com`.)
+- **Which email should receive the visitor confirmation for the test?** (The church notification always goes to `anewbeginningrushville@gmail.com`, so you'll see that one too if you have inbox access there.)
+- Which test path you prefer (API or UI). Default: API.
