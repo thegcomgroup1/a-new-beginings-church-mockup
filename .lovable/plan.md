@@ -1,22 +1,58 @@
-## Current state
+## 1. Fix the build first
 
-The "Plan Your Visit" form on the homepage is wired to local React state only — when someone submits, they see "We've got you" but **no email is sent and nobody at the church is notified**. The buttons (header, hero, sticky CTA) all correctly scroll to the form, but the submission itself is a dead end.
+The recent `@tanstack/react-start` upgrade (1.168.26) pulled ahead of `@tanstack/react-router` (router-core 1.168.17), which is missing the `getScriptPreloadAttrs` export the newer start runtime needs. Align all TanStack packages to the latest matching minor:
 
-To send real emails you need a sender domain. The project has none configured.
+- Upgrade `@tanstack/react-router` and `@tanstack/router-plugin` to the latest 1.168.x.
+- Re-run the dev build to confirm the SSR bundle resolves cleanly.
 
-## Recommended path
+No app code changes are required for this step.
 
-1. **You secure a domain for the church** (e.g. `anewbeginningchurch.org` or similar). You can buy one directly inside Lovable: Project Settings → Project → Domains → "Buy new domain". This is the cleanest option — domain becomes available immediately and DNS is managed inside Lovable.
-2. **Once the domain is connected**, come back and tell me it's ready. I'll then:
-   - Set up Lovable's email infrastructure on a subdomain like `notify.<yourdomain>`.
-   - Add two branded email templates:
-     - **Notification to the church** (sent to `anewbeginningrushville@gmail.com`) with the visitor's name, email, when they're coming, and any note.
-     - **Confirmation to the visitor** — warm welcome, service times, address, what to expect on Sunday.
-   - Add a public action endpoint that validates the form (Zod) and triggers both sends with idempotency keys (so retries don't double-send).
-   - Update the form to POST to that endpoint with a loading state, error handling, and only flip to the "We've got you" success view after the real send succeeds.
+## 2. Plan a Visit email sequence
 
-## What I need from you to proceed
+Now that `anewbeginningchurch.org` is connected, set up Lovable's built-in email infrastructure on a delegated subdomain (e.g. `notify.anewbeginningchurch.org`) and send two emails every time the homepage form is submitted:
 
-Just confirm once the domain is connected in Project Settings → Domains and shows status "Active" (or "Ready"). Then I'll handle steps 2 in full — no more questions needed; I'll use `anewbeginningrushville@gmail.com` (already in your site config) as the notification recipient.
+**Email A — Visitor confirmation** (to the person filling out the form)
+- Subject: "We're so glad you're coming — A New Beginning Church"
+- Warm note from Pastor Mark, Sunday service time (10:30 AM), address with Google Maps link, what to expect (casual dress, coffee, kids welcome), a "reply to this email if you have questions" line.
+- From: `hello@anewbeginningchurch.org`, reply-to: `anewbeginningrushville@gmail.com`.
 
-If you'd rather use a domain you already own elsewhere, that works too — connect it via Project Settings → Domains → "Connect Domain" and follow the DNS instructions.
+**Email B — Church notification** (to `anewbeginningrushville@gmail.com`)
+- Subject: "New visitor planning to visit — {name}"
+- Full submission details (name, email, when, optional note), submission timestamp, a "reply to visitor" mailto link prefilled with the visitor's email.
+
+### How it wires together
+
+```text
+Homepage form (PlanYourVisit.tsx)
+   │  POSTs JSON to
+   ▼
+/api/public/plan-visit  (TSS server route)
+   │  validates with Zod, then
+   ├──► sendTransactionalEmail("visit-confirmation", visitor)
+   └──► sendTransactionalEmail("visit-notification", church inbox)
+   │
+   ▼  enqueues into pgmq
+process-email-queue cron → Lovable Emails → recipient inbox
+```
+
+### Steps
+
+1. **Email domain** — open the email setup dialog so you can pick the sender subdomain on `anewbeginningchurch.org` and add the NS records. (Required prereq; nothing else proceeds until DNS is in.)
+2. **Infrastructure** — provision the email queue, suppression list, unsubscribe tokens, and cron job.
+3. **Templates** — scaffold the transactional email system, then add two branded React Email templates (`visit-confirmation`, `visit-notification`) styled to match the site (warm cream/green palette, serif display headings).
+4. **Public submit route** — create `src/routes/api/public/plan-visit.ts` that validates input (name ≤ 100, email, when ≤ 200, note ≤ 1000), enqueues both emails with an idempotency key derived from email + timestamp, and returns `{ ok: true }`.
+5. **Form** — convert `PlanYourVisit.tsx` to POST to that route with proper loading/error states, keep the existing "We've got you" success screen, and show an inline error if the request fails.
+6. **Unsubscribe page** — scaffold the branded `/email/unsubscribe` page at whatever path the tool reports.
+
+### Technical notes
+
+- Public route at `/api/public/plan-visit` so it works without a Supabase session.
+- Zod validation runs server-side; client validation is just for UX.
+- Idempotency keys (`visit-confirm-{email}-{ts}` / `visit-notify-{email}-{ts}`) prevent duplicate sends on retry.
+- Emails are queued, not sent inline — submission stays fast and retries are automatic.
+- No database table is added; if you later want a visitor log, that's a follow-up.
+
+### What I'll need from you mid-flow
+
+- Complete the email domain setup dialog (pick subdomain, add NS records at the registrar). I'll pause and resume once that's done.
+- Confirm the visitor email should come from `hello@anewbeginningchurch.org` (or tell me a different sender like `visit@…`).
