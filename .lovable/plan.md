@@ -1,28 +1,13 @@
-## Test the Plan Your Visit email flow
+## Plan: Favicon from church logo
 
-Now that the site is published, we can fire a real submission against the live endpoint and confirm both emails land.
+Generate favicon assets from the existing transparent cross-with-vines logo (`src/assets/anewbeginning/logo.png`) and wire them into the site head.
 
-### How I'll test
+### Steps
 
-1. **POST a test submission** to `https://a-new-beginning-church.lovable.app/api/public/plan-visit` with a realistic payload (name, email, "when", note). I'll use an email address you give me as the visitor.
-2. **Check the response** — expect `{ ok: true, submissionId: "..." }` with HTTP 200.
-3. **Query `email_send_log`** for the two rows tied to that submission (`plan-visit-visitor-{id}` and `plan-visit-notify-{id}`) and report their status (`pending` → `sent`, or `failed`/`dlq` with the error message if anything goes wrong).
-4. **Confirm inbox delivery**:
-   - Visitor confirmation → the test email you provide
-   - Church notification → `anewbeginningrushville@gmail.com`
+1. **Create favicon image** — use `imagegen--edit_image` on the existing logo to produce a square, centered 512×512 PNG with safe padding so the cross reads at 16×16. Save to `src/assets/anewbeginning/favicon.png` and upload via `lovable-assets` to get a stable CDN URL.
 
-If anything fails, I'll inspect the `error_message` column and the queue state, fix it, and re-run.
+2. **Wire it into `src/routes/__root.tsx`** — add `<link rel="icon">` (PNG) and `<link rel="apple-touch-icon">` tags pointing at the CDN URL, replacing any default Vite/Lovable favicon link.
 
-### Alternative: test through the live UI
+3. **Verify** — confirm the build is green and the favicon URL responds; you'll see it in the browser tab on the next preview reload.
 
-If you'd rather click through it like a real visitor:
-1. Open https://a-new-beginning-church.lovable.app
-2. Scroll to "Plan your visit," fill in your name + email, submit
-3. Tell me when you've submitted and I'll pull the matching `email_send_log` rows and report status
-
-Either path works — the API call is faster, the UI path also validates the form wiring.
-
-### What I need from you
-
-- **Which email should receive the visitor confirmation for the test?** (The church notification always goes to `anewbeginningrushville@gmail.com`, so you'll see that one too if you have inbox access there.)
-- Which test path you prefer (API or UI). Default: API.
+That's it — small, contained, no impact on the Plan-a-Visit flow you're about to test.
