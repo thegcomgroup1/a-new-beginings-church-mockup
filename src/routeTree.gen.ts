@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchRouteImport } from './routes/watch'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as AboutRouteImport } from './routes/about'
@@ -24,6 +25,11 @@ import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/e
 const WatchRoute = WatchRouteImport.update({
   id: '/watch',
   path: '/watch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResourcesRoute = ResourcesRouteImport.update({
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
   '/resources': typeof ResourcesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch': typeof WatchRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
   '/resources': typeof ResourcesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch': typeof WatchRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
   '/resources': typeof ResourcesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch': typeof WatchRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/events'
     | '/resources'
+    | '/sitemap.xml'
     | '/watch'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/events'
     | '/resources'
+    | '/sitemap.xml'
     | '/watch'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/events'
     | '/resources'
+    | '/sitemap.xml'
     | '/watch'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
@@ -167,6 +179,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   EventsRoute: typeof EventsRoute
   ResourcesRoute: typeof ResourcesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WatchRoute: typeof WatchRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   ApiPublicPlanVisitRoute: typeof ApiPublicPlanVisitRoute
@@ -183,6 +196,13 @@ declare module '@tanstack/react-router' {
       path: '/watch'
       fullPath: '/watch'
       preLoaderRoute: typeof WatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resources': {
@@ -263,6 +283,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   EventsRoute: EventsRoute,
   ResourcesRoute: ResourcesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   WatchRoute: WatchRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   ApiPublicPlanVisitRoute: ApiPublicPlanVisitRoute,

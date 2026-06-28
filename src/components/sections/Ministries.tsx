@@ -24,7 +24,7 @@ export function Ministries() {
               <h3 className="font-display text-xl font-semibold">{m.name}</h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{m.line}</p>
               <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-secondary">
-                Learn more
+                View ministry details
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
               </span>
             </a>

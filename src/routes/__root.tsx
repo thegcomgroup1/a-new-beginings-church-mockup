@@ -105,6 +105,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "A New Beginning Church",
+          url: "https://anewbeginningchurch.org",
+          logo: favicon.url,
+          sameAs: [
+            "https://www.facebook.com/p/A-New-Beginning-Ministry-61551913997354/",
+            "https://www.youtube.com/@AnewbeginningRushville",
+          ],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
