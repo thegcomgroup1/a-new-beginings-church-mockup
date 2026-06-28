@@ -21,6 +21,7 @@ import {
   eventsForMonth,
   eventsOnDay,
   getFeaturedEvent,
+  expandRecurring,
   type ChurchEvent,
 } from "@/config/events";
 
@@ -40,6 +41,42 @@ export const Route = createFileRoute("/events")({
           "Upcoming gatherings, services, and special events at A New Beginning Church in Rushville, IN.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://anewbeginningchurch.org/events" },
+    ],
+    links: [{ rel: "canonical", href: "https://anewbeginningchurch.org/events" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(
+          expandRecurring(new Date()).slice(0, 8).map((e) => ({
+            "@context": "https://schema.org",
+            "@type": "Event",
+            name: e.title,
+            startDate: e.start.toISOString(),
+            endDate: e.end?.toISOString(),
+            eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+            eventStatus: "https://schema.org/EventScheduled",
+            location: {
+              "@type": "Place",
+              name: "A New Beginning Church",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "1024 S Old 3",
+                addressLocality: "Rushville",
+                addressRegion: "IN",
+                postalCode: "46173",
+                addressCountry: "US",
+              },
+            },
+            description: e.blurb,
+            organizer: {
+              "@type": "Organization",
+              name: "A New Beginning Church",
+              url: "https://anewbeginningchurch.org/",
+            },
+          })),
+        ),
+      },
     ],
   }),
   component: EventsPage,
