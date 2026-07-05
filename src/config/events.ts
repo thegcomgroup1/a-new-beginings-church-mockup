@@ -16,6 +16,9 @@ export type ChurchEvent = {
   featured?: boolean;
   ctaLabel?: string;
   ctaUrl?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  eyebrow?: string;
 };
 
 type RecurringDef = {
@@ -30,6 +33,8 @@ type RecurringDef = {
 };
 
 const RUSHVILLE_ADDRESS = "1024 S Old 3, Rushville, IN 46173";
+
+import tentRevivalFlyer from "@/assets/anewbeginning/tent-revival-flyer.jpg.asset.json";
 
 export const recurringEvents: RecurringDef[] = [
   {
@@ -80,7 +85,31 @@ export const recurringEvents: RecurringDef[] = [
 
 /** One-off / special events. Leave the array — the page renders a styled
  *  "Featured Event" slot from the next upcoming Sunday Worship when empty. */
-export const specialEvents: ChurchEvent[] = [];
+export const specialEvents: ChurchEvent[] = (() => {
+  const nights: ChurchEvent[] = [];
+  for (let d = 12; d <= 18; d++) {
+    const start = new Date(2026, 6, d, 18, 30, 0, 0); // July is month 6
+    const end = new Date(start);
+    end.setMinutes(end.getMinutes() + 120);
+    nights.push({
+      id: `great-awakening-tent-revival-2026-07-${String(d).padStart(2, "0")}`,
+      title: "Great Awakening Tent Revival",
+      start,
+      end,
+      location: `A New Beginning Church · ${RUSHVILLE_ADDRESS} (tent on the church property)`,
+      blurb:
+        "Life Together Ministry & A New Beginning Church present a week of worship, preaching, and ministry under the tent with Pastors Mark and Tammy Mathews. Come expectant — come and receive your miracle. Family-friendly, free, and open to the public. Rain or shine. Nightly giveaways (must be present to receive).",
+      featured: d === 12,
+      eyebrow: "Special Event · July 12–18, 2026",
+      ctaLabel: "Plan your visit",
+      ctaUrl: "/#visit",
+      imageSrc: tentRevivalFlyer.url,
+      imageAlt:
+        "Great Awakening Tent Revival — July 12–18, 2026, 6:30 PM nightly at A New Beginning Church, Rushville, IN. Hosted by Pastors Mark and Tammy Mathews.",
+    });
+  }
+  return nights;
+})();
 
 /** Expand recurring defs into concrete dates for the given visible month. */
 export function expandRecurring(monthDate: Date): ChurchEvent[] {

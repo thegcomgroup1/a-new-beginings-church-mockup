@@ -23,10 +23,10 @@ import churchPhoto from "@/assets/anewbeginning/brand-3.jpg.asset.json";
 
 export const siteConfig = {
   announcement: {
-    enabled: false, // flip true for a top banner (e.g., a special service)
-    text: "Join us this Sunday at 10:30 — there's a seat saved for you.",
-    ctaLabel: "Plan your visit",
-    ctaUrl: "#visit",
+    enabled: true,
+    text: "Great Awakening Tent Revival · July 12–18, 2026 · 6:30 PM nightly",
+    ctaLabel: "See details",
+    ctaUrl: "/events",
   },
 
   church: {
@@ -118,6 +118,12 @@ export const siteConfig = {
   ],
 
   events: [
+    {
+      date: "July 12–18 · 6:30 PM nightly",
+      title: "Great Awakening Tent Revival",
+      blurb:
+        "A week of worship, preaching, and ministry under the tent with Pastors Mark and Tammy Mathews. Come and receive your miracle.",
+    },
     {
       date: "This Sunday · 10:30 AM",
       title: "Join Us This Sunday",
