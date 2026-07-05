@@ -123,15 +123,15 @@ function FeaturedEvent() {
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="mb-4 text-xs font-medium uppercase tracking-widest text-secondary">
-          Featured Event
+          {event.eyebrow ?? "Featured Event"}
         </p>
         <article className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="grid gap-0 md:grid-cols-2">
             <div
               className="aspect-[4/3] w-full bg-cover bg-center md:aspect-auto md:min-h-[360px]"
-              style={{ backgroundImage: `url(${siteConfig.brand.heroMedia.imageSrc})` }}
+              style={{ backgroundImage: `url(${event.imageSrc ?? siteConfig.brand.heroMedia.imageSrc})` }}
               role="img"
-              aria-label={siteConfig.brand.heroMedia.imageAlt}
+              aria-label={event.imageAlt ?? siteConfig.brand.heroMedia.imageAlt}
             />
             <div className="flex flex-col justify-center p-8 md:p-10">
               <div className="inline-flex items-center gap-2 text-sm font-medium text-primary">
