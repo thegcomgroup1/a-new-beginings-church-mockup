@@ -1,4 +1,5 @@
-import { Heart, Mail } from "lucide-react";
+import { Heart, ArrowRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { siteConfig } from "@/config/site";
 
 export function Give() {
@@ -14,13 +15,13 @@ export function Give() {
         <p className="mt-4 text-base text-muted-foreground md:text-lg">
           {siteConfig.give.line}
         </p>
-        <a
-          href={siteConfig.give.onlineUrl}
+        <Link
+          to="/give"
           className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-primary px-7 text-base font-medium text-primary-foreground shadow-sm transition-all hover:brightness-110"
         >
-          <Mail className="h-4 w-4" aria-hidden />
-          Email us about giving
-        </a>
+          Ways to give
+          <ArrowRight className="h-4 w-4" aria-hidden />
+        </Link>
       </div>
     </section>
   );
