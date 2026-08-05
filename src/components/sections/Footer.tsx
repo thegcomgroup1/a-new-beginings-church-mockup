@@ -31,6 +31,9 @@ export function Footer() {
               <li><Link to="/about" className="text-muted-foreground hover:text-foreground">About &amp; leaders</Link></li>
               <li><Link to="/events" className="text-muted-foreground hover:text-foreground">Events</Link></li>
               <li><Link to="/watch" className="text-muted-foreground hover:text-foreground">Watch messages</Link></li>
+              <li><Link to="/testimonies" className="text-muted-foreground hover:text-foreground">Testimonies</Link></li>
+              <li><Link to="/prayer" className="text-muted-foreground hover:text-foreground">Prayer requests</Link></li>
+              <li><Link to="/give" className="text-muted-foreground hover:text-foreground">Give</Link></li>
               <li><Link to="/resources" className="text-muted-foreground hover:text-foreground">Resources</Link></li>
               <li>
                 <Link to="/" hash="plan-your-visit" className="text-muted-foreground hover:text-foreground">

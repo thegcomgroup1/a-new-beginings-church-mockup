@@ -10,13 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchRouteImport } from './routes/watch'
+import { Route as TestimoniesRouteImport } from './routes/testimonies'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as PrayerRouteImport } from './routes/prayer'
+import { Route as GiveRouteImport } from './routes/give'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
+import { Route as ApiPublicPrayerRequestRouteImport } from './routes/api/public/prayer-request'
 import { Route as ApiPublicPlanVisitRouteImport } from './routes/api/public/plan-visit'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -27,6 +31,11 @@ const WatchRoute = WatchRouteImport.update({
   path: '/watch',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TestimoniesRoute = TestimoniesRouteImport.update({
+  id: '/testimonies',
+  path: '/testimonies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -35,6 +44,16 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrayerRoute = PrayerRouteImport.update({
+  id: '/prayer',
+  path: '/prayer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiveRoute = GiveRouteImport.update({
+  id: '/give',
+  path: '/give',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsRoute = EventsRouteImport.update({
@@ -60,6 +79,11 @@ const EmailUnsubscribeRoute = EmailUnsubscribeRouteImport.update({
 const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
   id: '/lovable/email/suppression',
   path: '/lovable/email/suppression',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicPrayerRequestRoute = ApiPublicPrayerRequestRouteImport.update({
+  id: '/api/public/prayer-request',
+  path: '/api/public/prayer-request',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicPlanVisitRoute = ApiPublicPlanVisitRouteImport.update({
@@ -90,11 +114,15 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
+  '/prayer': typeof PrayerRoute
   '/resources': typeof ResourcesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/testimonies': typeof TestimoniesRoute
   '/watch': typeof WatchRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
+  '/api/public/prayer-request': typeof ApiPublicPrayerRequestRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -104,11 +132,15 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
+  '/prayer': typeof PrayerRoute
   '/resources': typeof ResourcesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/testimonies': typeof TestimoniesRoute
   '/watch': typeof WatchRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
+  '/api/public/prayer-request': typeof ApiPublicPrayerRequestRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -119,11 +151,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
+  '/prayer': typeof PrayerRoute
   '/resources': typeof ResourcesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/testimonies': typeof TestimoniesRoute
   '/watch': typeof WatchRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
+  '/api/public/prayer-request': typeof ApiPublicPrayerRequestRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -135,11 +171,15 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/events'
+    | '/give'
+    | '/prayer'
     | '/resources'
     | '/sitemap.xml'
+    | '/testimonies'
     | '/watch'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
+    | '/api/public/prayer-request'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -149,11 +189,15 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/events'
+    | '/give'
+    | '/prayer'
     | '/resources'
     | '/sitemap.xml'
+    | '/testimonies'
     | '/watch'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
+    | '/api/public/prayer-request'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -163,11 +207,15 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/events'
+    | '/give'
+    | '/prayer'
     | '/resources'
     | '/sitemap.xml'
+    | '/testimonies'
     | '/watch'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
+    | '/api/public/prayer-request'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -178,11 +226,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   EventsRoute: typeof EventsRoute
+  GiveRoute: typeof GiveRoute
+  PrayerRoute: typeof PrayerRoute
   ResourcesRoute: typeof ResourcesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TestimoniesRoute: typeof TestimoniesRoute
   WatchRoute: typeof WatchRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   ApiPublicPlanVisitRoute: typeof ApiPublicPlanVisitRoute
+  ApiPublicPrayerRequestRoute: typeof ApiPublicPrayerRequestRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -198,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/testimonies': {
+      id: '/testimonies'
+      path: '/testimonies'
+      fullPath: '/testimonies'
+      preLoaderRoute: typeof TestimoniesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -210,6 +269,20 @@ declare module '@tanstack/react-router' {
       path: '/resources'
       fullPath: '/resources'
       preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayer': {
+      id: '/prayer'
+      path: '/prayer'
+      fullPath: '/prayer'
+      preLoaderRoute: typeof PrayerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/give': {
+      id: '/give'
+      path: '/give'
+      fullPath: '/give'
+      preLoaderRoute: typeof GiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events': {
@@ -247,6 +320,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailSuppressionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/prayer-request': {
+      id: '/api/public/prayer-request'
+      path: '/api/public/prayer-request'
+      fullPath: '/api/public/prayer-request'
+      preLoaderRoute: typeof ApiPublicPrayerRequestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/plan-visit': {
       id: '/api/public/plan-visit'
       path: '/api/public/plan-visit'
@@ -282,11 +362,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   EventsRoute: EventsRoute,
+  GiveRoute: GiveRoute,
+  PrayerRoute: PrayerRoute,
   ResourcesRoute: ResourcesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TestimoniesRoute: TestimoniesRoute,
   WatchRoute: WatchRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   ApiPublicPlanVisitRoute: ApiPublicPlanVisitRoute,
+  ApiPublicPrayerRequestRoute: ApiPublicPrayerRequestRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
@@ -295,13 +379,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
