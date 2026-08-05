@@ -6,12 +6,19 @@ import { siteConfig } from "@/config/site";
 
 type NavItem =
   | { label: string; hash: string; to?: undefined }
-  | { label: string; to: "/about" | "/events" | "/watch" | "/resources"; hash?: undefined };
+  | {
+      label: string;
+      to: "/about" | "/events" | "/watch" | "/testimonies" | "/prayer" | "/give" | "/resources";
+      hash?: undefined;
+    };
 
 const nav: NavItem[] = [
   { label: "About", to: "/about" },
   { label: "Events", to: "/events" },
   { label: "Watch", to: "/watch" },
+  { label: "Testimonies", to: "/testimonies" },
+  { label: "Prayer", to: "/prayer" },
+  { label: "Give", to: "/give" },
   { label: "Resources", to: "/resources" },
   { label: "Times & Location", hash: "times" },
 ];
@@ -36,7 +43,7 @@ export function StickyHeader() {
           )}
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-5 lg:flex">
           {nav.map((item) =>
             item.to ? (
               <Link
@@ -66,7 +73,7 @@ export function StickyHeader() {
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground/80 hover:bg-muted md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground/80 hover:bg-muted lg:hidden"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -74,7 +81,7 @@ export function StickyHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-border/60 bg-background md:hidden">
+        <div className="border-t border-border/60 bg-background lg:hidden">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 sm:px-6">
             {nav.map((item) =>
               item.to ? (

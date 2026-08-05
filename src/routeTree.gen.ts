@@ -14,6 +14,7 @@ import { Route as TestimoniesRouteImport } from './routes/testimonies'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as PrayerRouteImport } from './routes/prayer'
+import { Route as GiveRouteImport } from './routes/give'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -48,6 +49,11 @@ const ResourcesRoute = ResourcesRouteImport.update({
 const PrayerRoute = PrayerRouteImport.update({
   id: '/prayer',
   path: '/prayer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiveRoute = GiveRouteImport.update({
+  id: '/give',
+  path: '/give',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsRoute = EventsRouteImport.update({
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
   '/prayer': typeof PrayerRoute
   '/resources': typeof ResourcesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
   '/prayer': typeof PrayerRoute
   '/resources': typeof ResourcesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
+  '/give': typeof GiveRoute
   '/prayer': typeof PrayerRoute
   '/resources': typeof ResourcesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/events'
+    | '/give'
     | '/prayer'
     | '/resources'
     | '/sitemap.xml'
@@ -179,6 +189,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/events'
+    | '/give'
     | '/prayer'
     | '/resources'
     | '/sitemap.xml'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/events'
+    | '/give'
     | '/prayer'
     | '/resources'
     | '/sitemap.xml'
@@ -214,6 +226,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   EventsRoute: typeof EventsRoute
+  GiveRoute: typeof GiveRoute
   PrayerRoute: typeof PrayerRoute
   ResourcesRoute: typeof ResourcesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -263,6 +276,13 @@ declare module '@tanstack/react-router' {
       path: '/prayer'
       fullPath: '/prayer'
       preLoaderRoute: typeof PrayerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/give': {
+      id: '/give'
+      path: '/give'
+      fullPath: '/give'
+      preLoaderRoute: typeof GiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events': {
@@ -342,6 +362,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   EventsRoute: EventsRoute,
+  GiveRoute: GiveRoute,
   PrayerRoute: PrayerRoute,
   ResourcesRoute: ResourcesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
