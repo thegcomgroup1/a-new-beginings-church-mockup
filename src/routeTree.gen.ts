@@ -17,6 +17,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
+import { Route as ApiPublicPrayerRequestRouteImport } from './routes/api/public/prayer-request'
 import { Route as ApiPublicPlanVisitRouteImport } from './routes/api/public/plan-visit'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -62,6 +63,11 @@ const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
   path: '/lovable/email/suppression',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPrayerRequestRoute = ApiPublicPrayerRequestRouteImport.update({
+  id: '/api/public/prayer-request',
+  path: '/api/public/prayer-request',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicPlanVisitRoute = ApiPublicPlanVisitRouteImport.update({
   id: '/api/public/plan-visit',
   path: '/api/public/plan-visit',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/watch': typeof WatchRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
+  '/api/public/prayer-request': typeof ApiPublicPrayerRequestRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/watch': typeof WatchRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
+  '/api/public/prayer-request': typeof ApiPublicPrayerRequestRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/watch': typeof WatchRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
+  '/api/public/prayer-request': typeof ApiPublicPrayerRequestRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/watch'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
+    | '/api/public/prayer-request'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/watch'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
+    | '/api/public/prayer-request'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/watch'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
+    | '/api/public/prayer-request'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
     | '/lovable/email/transactional/preview'
@@ -183,6 +195,7 @@ export interface RootRouteChildren {
   WatchRoute: typeof WatchRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   ApiPublicPlanVisitRoute: typeof ApiPublicPlanVisitRoute
+  ApiPublicPrayerRequestRoute: typeof ApiPublicPrayerRequestRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -247,6 +260,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailSuppressionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/prayer-request': {
+      id: '/api/public/prayer-request'
+      path: '/api/public/prayer-request'
+      fullPath: '/api/public/prayer-request'
+      preLoaderRoute: typeof ApiPublicPrayerRequestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/plan-visit': {
       id: '/api/public/plan-visit'
       path: '/api/public/plan-visit'
@@ -287,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   WatchRoute: WatchRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   ApiPublicPlanVisitRoute: ApiPublicPlanVisitRoute,
+  ApiPublicPrayerRequestRoute: ApiPublicPrayerRequestRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
@@ -295,13 +316,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
