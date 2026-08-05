@@ -13,6 +13,7 @@ import { Route as WatchRouteImport } from './routes/watch'
 import { Route as TestimoniesRouteImport } from './routes/testimonies'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as PrayerRouteImport } from './routes/prayer'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -42,6 +43,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrayerRoute = PrayerRouteImport.update({
+  id: '/prayer',
+  path: '/prayer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventsRoute = EventsRouteImport.update({
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
+  '/prayer': typeof PrayerRoute
   '/resources': typeof ResourcesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonies': typeof TestimoniesRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
+  '/prayer': typeof PrayerRoute
   '/resources': typeof ResourcesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonies': typeof TestimoniesRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/events': typeof EventsRoute
+  '/prayer': typeof PrayerRoute
   '/resources': typeof ResourcesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonies': typeof TestimoniesRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/events'
+    | '/prayer'
     | '/resources'
     | '/sitemap.xml'
     | '/testimonies'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/events'
+    | '/prayer'
     | '/resources'
     | '/sitemap.xml'
     | '/testimonies'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/events'
+    | '/prayer'
     | '/resources'
     | '/sitemap.xml'
     | '/testimonies'
@@ -202,6 +214,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   EventsRoute: typeof EventsRoute
+  PrayerRoute: typeof PrayerRoute
   ResourcesRoute: typeof ResourcesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimoniesRoute: typeof TestimoniesRoute
@@ -243,6 +256,13 @@ declare module '@tanstack/react-router' {
       path: '/resources'
       fullPath: '/resources'
       preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayer': {
+      id: '/prayer'
+      path: '/prayer'
+      fullPath: '/prayer'
+      preLoaderRoute: typeof PrayerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/events': {
@@ -322,6 +342,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   EventsRoute: EventsRoute,
+  PrayerRoute: PrayerRoute,
   ResourcesRoute: ResourcesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimoniesRoute: TestimoniesRoute,

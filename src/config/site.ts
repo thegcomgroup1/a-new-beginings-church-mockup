@@ -150,6 +150,10 @@ export const siteConfig = {
   give: {
     line: "We don't have online giving set up yet. If you'd like to support the ministry, reach out and we'll point you the right direction.",
     onlineUrl: "mailto:anewbeginningrushville@gmail.com",
+    /** Flip to true and set onlineGivingUrl once the bank/processor link is ready. */
+    onlineEnabled: false,
+    onlineGivingUrl: "",
+    mailingAddress: "A New Beginning Church, 1024 S Old 3, Rushville, IN 46173",
   },
 
   welcomeVideo: {
