@@ -11,21 +11,13 @@ export interface Testimony {
 
 export const testimonies: Testimony[] = [
   {
-    name: "A New Beginning Church",
-    title: "A story from our church family",
+    name: "Aaron and Julie Schilling",
+    title: "She Was Told She Only Had a Few Years to Live",
     blurb:
-      "Hear what God has been doing in the life of one of our own — shared in their own words.",
+      "Aaron and Julie share what God did when the doctors' report said one thing and He said another.",
     youtubeUrl: "https://www.facebook.com/reel/1032064849427589",
   },
 ];
-
-/** Facebook video/reel links get embedded through the Facebook video plugin. */
-export function facebookEmbedUrl(url: string): string | null {
-  if (!/(^|\.)facebook\.com\//.test(url) && !/fb\.watch\//.test(url)) return null;
-  return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
-    url,
-  )}&show_text=false`;
-}
 
 export function youtubeIdFromUrl(url: string): string | null {
   const patterns = [
