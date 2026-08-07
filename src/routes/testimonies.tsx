@@ -5,7 +5,7 @@ import { StickyHeader } from "@/components/sections/StickyHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { testimonies, youtubeIdFromUrl } from "@/config/testimonies";
+import { testimonies, youtubeIdFromUrl, facebookEmbedUrl } from "@/config/testimonies";
 
 const CANONICAL = "https://anewbeginningchurch.org/testimonies";
 
@@ -74,6 +74,7 @@ function VideoGrid() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 md:grid-cols-2">
         {testimonies.map((t) => {
           const id = youtubeIdFromUrl(t.youtubeUrl);
+          const fb = id ? null : facebookEmbedUrl(t.youtubeUrl);
           return (
             <article key={t.youtubeUrl}>
               <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
@@ -84,6 +85,19 @@ function VideoGrid() {
                       title={t.title}
                       loading="lazy"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="h-full w-full"
+                    />
+                  </div>
+                ) : fb ? (
+                  <div className="aspect-video w-full overflow-hidden bg-black">
+                    <iframe
+                      src={fb}
+                      title={t.title}
+                      loading="lazy"
+                      scrolling="no"
+                      frameBorder="0"
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                       allowFullScreen
                       className="h-full w-full"
                     />
