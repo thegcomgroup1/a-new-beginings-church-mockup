@@ -19,6 +19,14 @@ export const testimonies: Testimony[] = [
   },
 ];
 
+/** Facebook video/reel links embed through the Facebook video plugin. */
+export function facebookEmbedUrl(url: string): string | null {
+  if (!/(^|\.)facebook\.com\//.test(url) && !/fb\.watch\//.test(url)) return null;
+  return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
+    url,
+  )}&show_text=false&width=560&height=315`;
+}
+
 export function youtubeIdFromUrl(url: string): string | null {
   const patterns = [
     /(?:youtube\.com\/watch\?(?:.*&)?v=)([\w-]{11})/,
