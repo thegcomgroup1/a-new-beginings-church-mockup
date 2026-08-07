@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Youtube, ArrowRight, Quote } from "lucide-react";
+import { Youtube, ArrowRight, Quote, Play } from "lucide-react";
 import { AnnouncementBar } from "@/components/sections/AnnouncementBar";
 import { StickyHeader } from "@/components/sections/StickyHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { testimonies, youtubeIdFromUrl, facebookEmbedUrl } from "@/config/testimonies";
+import { testimonies, youtubeIdFromUrl } from "@/config/testimonies";
 
 const CANONICAL = "https://anewbeginningchurch.org/testimonies";
 
@@ -74,7 +74,6 @@ function VideoGrid() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 md:grid-cols-2">
         {testimonies.map((t) => {
           const id = youtubeIdFromUrl(t.youtubeUrl);
-          const fb = id ? null : facebookEmbedUrl(t.youtubeUrl);
           return (
             <article key={t.youtubeUrl}>
               <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
@@ -89,25 +88,17 @@ function VideoGrid() {
                       className="h-full w-full"
                     />
                   </div>
-                ) : fb ? (
-                  <div className="aspect-[9/16] w-full bg-black">
-                    <iframe
-                      src={fb}
-                      title={t.title}
-                      loading="lazy"
-                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                      allowFullScreen
-                      className="h-full w-full"
-                    />
-                  </div>
                 ) : (
                   <a
                     href={t.youtubeUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex aspect-video items-center justify-center gap-2 bg-muted text-sm font-medium"
+                    className="group flex aspect-video flex-col items-center justify-center gap-3 bg-muted transition-colors hover:bg-muted/70"
                   >
-                    <Youtube className="h-5 w-5" aria-hidden /> Watch on YouTube
+                    <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md transition-transform group-hover:scale-105">
+                      <Play className="ml-0.5 h-6 w-6 fill-current" aria-hidden />
+                    </span>
+                    <span className="text-sm font-medium">Watch the video</span>
                   </a>
                 )}
               </div>
