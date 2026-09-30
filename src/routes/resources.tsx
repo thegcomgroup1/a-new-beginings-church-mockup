@@ -1,11 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Download, FileText, BookOpen, ArrowRight, Mail } from "lucide-react";
+import { Download, FileText, BookOpen, ArrowRight, Mail, CalendarDays, MapPin } from "lucide-react";
 import { AnnouncementBar } from "@/components/sections/AnnouncementBar";
 import { StickyHeader } from "@/components/sections/StickyHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { resources, recommendedReading, type ResourceItem } from "@/config/resources";
+import {
+  resources,
+  resourceCategories,
+  recommendedReading,
+  type ResourceItem,
+} from "@/config/resources";
 
 export const Route = createFileRoute("/resources")({
   head: () => ({
@@ -14,7 +19,7 @@ export const Route = createFileRoute("/resources")({
       {
         name: "description",
         content:
-          "Sermon notes, study guides, and recommended reading from A New Beginning Church in Rushville, IN.",
+          "Prayer, offering, Bible study, evangelism, and relationship resources from A New Beginning Church in Rushville, IN.",
       },
       { property: "og:title", content: "Resources — A New Beginning Church" },
       {
@@ -23,6 +28,7 @@ export const Route = createFileRoute("/resources")({
           "Sermon notes, study guides, and recommended reading to help you grow midweek.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: siteConfig.brand.heroMedia.imageSrc },
       { name: "twitter:image", content: siteConfig.brand.heroMedia.imageSrc },
     ],
@@ -37,6 +43,7 @@ function ResourcesPage() {
       <StickyHeader />
       <main>
         <Intro />
+        <NewBelieversClass />
         <Downloads />
         <Reading />
         <ContactCta />
@@ -57,8 +64,8 @@ function Intro() {
           Keep growing midweek.
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-          Sermon notes, study guides, and recommended reading. We're adding more
-          here as Pastor Mark and the team build them out.
+          Practical tools for living out our five pillars of faith — Prayer,
+          Offering, Word of God, Evangelism, and Relationships.
         </p>
       </div>
     </section>
@@ -69,14 +76,67 @@ function Downloads() {
   return (
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="font-display text-3xl font-semibold md:text-4xl">
-          Sermon notes &amp; study guides
-        </h2>
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {resources.map((r) => (
-            <ResourceCard key={r.id} resource={r} />
-          ))}
+        <p className="text-sm font-semibold uppercase tracking-widest text-primary">Our five pillars of faith</p>
+        <h2 className="mt-3 font-display text-3xl font-semibold md:text-4xl">P.O.W.E.R. resources</h2>
+        <div className="mt-10 space-y-14">
+          {resourceCategories.map((category) => {
+            const categoryResources = resources.filter((resource) => resource.category === category.name);
+            return (
+              <section key={category.name} id={category.name.toLowerCase().replaceAll(" ", "-")} className="scroll-mt-28 border-t border-border pt-8">
+                <div className="grid gap-6 lg:grid-cols-[0.7fr_1.3fr]">
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary font-display text-xl font-semibold text-primary-foreground">{category.letter}</span>
+                      <h3 className="font-display text-2xl font-semibold md:text-3xl">{category.name}</h3>
+                    </div>
+                    <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">{category.description}</p>
+                  </div>
+                  {categoryResources.length > 0 ? (
+                    <div className="grid gap-5 md:grid-cols-2">
+                      {categoryResources.map((resource) => <ResourceCard key={resource.id} resource={resource} />)}
+                    </div>
+                  ) : (
+                    <div className="flex min-h-36 items-center border-l-2 border-primary/20 pl-6">
+                      <div>
+                        <p className="font-display text-xl font-semibold">Resources are on the way.</p>
+                        <p className="mt-1 text-sm text-muted-foreground">The church is preparing materials for this pillar. Check back soon.</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          })}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function NewBelieversClass() {
+  const classResource = resources.find((resource) => resource.classResource);
+  return (
+    <section className="border-b border-border bg-secondary py-14 text-secondary-foreground md:py-16">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-secondary-foreground/70">Starting October 6</p>
+          <h2 className="mt-3 font-display text-3xl font-semibold text-secondary-foreground md:text-4xl">New Believers Class</h2>
+          <p className="mt-4 max-w-2xl leading-relaxed text-secondary-foreground/80">
+            Join us in person every Tuesday at 6:00 PM for a welcoming class built to help new believers grow in faith. Meetings are held in the sanctuary unless otherwise noted in church announcements.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-secondary-foreground/80">
+            <span className="inline-flex items-center gap-2"><CalendarDays className="h-4 w-4 text-primary" aria-hidden />Tuesdays at 6:00 PM</span>
+            <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" aria-hidden />In person · Sanctuary</span>
+          </div>
+        </div>
+        {classResource && (
+          <Button asChild>
+            <a href={classResource.fileUrl} target="_blank" rel="noreferrer">
+              <Download className="h-4 w-4" aria-hidden />
+              Open class resource
+            </a>
+          </Button>
+        )}
       </div>
     </section>
   );
@@ -85,7 +145,7 @@ function Downloads() {
 function ResourceCard({ resource }: { resource: ResourceItem }) {
   const isComing = resource.fileUrl === "#";
   return (
-    <article className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm">
+    <article className="flex flex-col rounded-lg border border-border bg-card p-6 shadow-sm">
       <div className="flex items-center gap-3">
         <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
           <FileText className="h-5 w-5" aria-hidden />
@@ -103,13 +163,12 @@ function ResourceCard({ resource }: { resource: ResourceItem }) {
           Coming soon
         </span>
       ) : (
-        <a
-          href={resource.fileUrl}
-          className="mt-5 inline-flex items-center gap-1.5 self-start text-sm font-medium text-primary hover:underline"
-        >
-          <Download className="h-4 w-4" aria-hidden />
-          Download
-        </a>
+        <Button asChild variant="outline" className="mt-5 self-start">
+          <a href={resource.fileUrl} target="_blank" rel="noreferrer">
+            <Download className="h-4 w-4" aria-hidden />
+            Open PDF
+          </a>
+        </Button>
       )}
     </article>
   );
