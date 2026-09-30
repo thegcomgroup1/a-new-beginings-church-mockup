@@ -23,6 +23,7 @@ export const Route = createFileRoute("/about")({
           "A Spirit-filled, Spirit-led family in Rushville doing God's will on earth. Meet our leaders and learn what we believe.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: siteConfig.brand.heroMedia.imageSrc },
       { name: "twitter:image", content: siteConfig.brand.heroMedia.imageSrc },
     ],

@@ -25,6 +25,7 @@ export const Route = createFileRoute("/testimonies")({
           "Watch testimony videos from our church family — God is still moving in Rushville.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: CANONICAL },
       { property: "og:image", content: siteConfig.brand.heroMedia.imageSrc },
       { name: "twitter:image", content: siteConfig.brand.heroMedia.imageSrc },

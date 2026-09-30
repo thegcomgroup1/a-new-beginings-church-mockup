@@ -40,13 +40,14 @@ export const resources: ResourceItem[] = [
     category: "Word of God",
   },
   {
-    id: "midweek-bible-discussion",
-    title: "Midweek Bible Discussion Guide",
+    id: "new-believers-class-guide",
+    title: "New Believers Class Guide",
     kind: "Study Guide",
     description:
-      "Discussion questions and Scripture for the Tuesday Bible Discussion — good for personal study or a small group.",
+      "Discussion questions and Scripture for the Tuesday New Believers Class — useful for class review or personal study.",
     fileUrl: "#",
     category: "Word of God",
+    classResource: true,
   },
   {
     id: "gifts-of-the-spirit",

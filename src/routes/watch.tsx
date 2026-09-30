@@ -32,6 +32,7 @@ export const Route = createFileRoute("/watch")({
           "Catch the latest Sunday messages on YouTube — Spirit-led, straight from the Word.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: siteConfig.brand.heroMedia.imageSrc },
       { name: "twitter:image", content: siteConfig.brand.heroMedia.imageSrc },
     ],
