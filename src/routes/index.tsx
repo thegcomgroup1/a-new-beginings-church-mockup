@@ -10,6 +10,7 @@ import { WelcomeVideo } from "@/components/sections/WelcomeVideo";
 import { LifeOfChurch } from "@/components/sections/LifeOfChurch";
 import { Ministries } from "@/components/sections/Ministries";
 import { Events } from "@/components/sections/Events";
+import { SpecialAnnouncements } from "@/components/sections/SpecialAnnouncements";
 import { Sermons } from "@/components/sections/Sermons";
 import { Give } from "@/components/sections/Give";
 import { PlanYourVisit } from "@/components/sections/PlanYourVisit";
@@ -40,6 +41,7 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://anewbeginningchurch.org/" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://anewbeginningchurch.org/" }],
     scripts: [
@@ -90,6 +92,7 @@ function Index() {
         <WelcomeVideo />
         <LifeOfChurch />
         <Ministries />
+        <SpecialAnnouncements />
         <Events />
         <Sermons latestVideo={latestVideo} />
         <Give />

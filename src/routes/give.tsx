@@ -24,6 +24,7 @@ export const Route = createFileRoute("/give")({
           "Every gift goes straight into ministry in Rushville. Here's how to give.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: CANONICAL },
       { property: "og:image", content: siteConfig.brand.heroMedia.imageSrc },
       { name: "twitter:image", content: siteConfig.brand.heroMedia.imageSrc },

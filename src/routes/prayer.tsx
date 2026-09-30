@@ -24,6 +24,7 @@ export const Route = createFileRoute("/prayer")({
           "Whatever you're carrying, you don't have to carry it alone. Send us your prayer request.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: CANONICAL },
       { property: "og:image", content: siteConfig.brand.heroMedia.imageSrc },
       { name: "twitter:image", content: siteConfig.brand.heroMedia.imageSrc },

@@ -30,6 +30,7 @@ type RecurringDef = {
   title: string;
   location: string;
   blurb: string;
+  startsOn?: Date;
 };
 
 const RUSHVILLE_ADDRESS = "1024 S Old 3, Rushville, IN 46173";
@@ -65,10 +66,11 @@ export const recurringEvents: RecurringDef[] = [
     hour: 18,
     minute: 0,
     durationMin: 90,
-    title: "Bible Discussion",
+    title: "New Believers Class",
     location: RUSHVILLE_ADDRESS,
     blurb:
-      "Open Bible discussion midweek. Bring your questions, your Bible, and a friend — all are welcome.",
+      "An in-person class in the sanctuary for new believers, meeting every Tuesday unless otherwise noted in our announcements.",
+    startsOn: new Date(2026, 9, 6, 0, 0, 0, 0),
   },
   {
     id: "wednesday-prayer-night",
@@ -108,6 +110,36 @@ export const specialEvents: ChurchEvent[] = (() => {
         "Great Awakening Tent Revival — July 12–18, 2026, 6:30 PM nightly at A New Beginning Church, Rushville, IN. Hosted by Pastors Mark and Tammy Mathews.",
     });
   }
+  nights.push(
+    {
+      id: "homecoming-friday-2026",
+      title: "Homecoming Weekend — Friday Service",
+      start: new Date(2026, 9, 23, 18, 0, 0, 0),
+      end: new Date(2026, 9, 23, 19, 30, 0, 0),
+      location: `Sanctuary · ${RUSHVILLE_ADDRESS}`,
+      blurb: "Join us for a special Homecoming Weekend service with Aaron, Julie Schilling, and family.",
+      featured: true,
+      eyebrow: "Homecoming Weekend · October 23–25, 2026",
+      ctaLabel: "Plan your visit",
+      ctaUrl: "/#visit",
+    },
+    {
+      id: "homecoming-breakfast-2026",
+      title: "Homecoming Free Breakfast",
+      start: new Date(2026, 9, 25, 8, 0, 0, 0),
+      end: new Date(2026, 9, 25, 9, 30, 0, 0),
+      location: RUSHVILLE_ADDRESS,
+      blurb: "Everyone is invited to a free breakfast before our anniversary celebration.",
+    },
+    {
+      id: "homecoming-anniversary-2026",
+      title: "Homecoming Anniversary Celebration",
+      start: new Date(2026, 9, 25, 10, 30, 0, 0),
+      end: new Date(2026, 9, 25, 12, 0, 0, 0),
+      location: `Sanctuary · ${RUSHVILLE_ADDRESS}`,
+      blurb: "Celebrate our church anniversary with special guest Steve Grant returning to A New Beginning Church.",
+    },
+  );
   return nights;
 })();
 
@@ -124,6 +156,7 @@ export function expandRecurring(monthDate: Date): ChurchEvent[] {
     if (day < monthStart || day > monthEnd) continue;
     for (const r of recurringEvents) {
       if (day.getDay() !== r.weekday) continue;
+      if (r.startsOn && day < r.startsOn) continue;
       const start = new Date(day);
       start.setHours(r.hour, r.minute, 0, 0);
       const end = new Date(start);

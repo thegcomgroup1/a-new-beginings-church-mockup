@@ -42,6 +42,7 @@ export const Route = createFileRoute("/events")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://anewbeginningchurch.org/events" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://anewbeginningchurch.org/events" }],
     scripts: [

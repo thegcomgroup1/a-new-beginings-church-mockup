@@ -24,7 +24,7 @@ import churchPhoto from "@/assets/anewbeginning/brand-3.jpg.asset.json";
 export const siteConfig = {
   announcement: {
     enabled: true,
-    text: "Great Awakening Tent Revival · July 12–18, 2026 · 6:30 PM nightly",
+    text: "Homecoming Weekend · October 23–25 · Special services and free Sunday breakfast",
     ctaLabel: "See details",
     ctaUrl: "/events",
   },
@@ -62,7 +62,7 @@ export const siteConfig = {
     timesLong: [
       { day: "Sunday Worship", time: "10:30 AM" },
       { day: "Monday Women's Study", time: "5:30 PM" },
-      { day: "Tuesday Bible Discussion", time: "6:00 PM" },
+      { day: "Tuesday New Believers Class", time: "6:00 PM" },
       { day: "Wednesday Prayer Night", time: "6:00 PM" },
     ],
     address: "1024 S Old 3, Rushville, IN 46173",
@@ -119,20 +119,20 @@ export const siteConfig = {
 
   events: [
     {
-      date: "July 12–18 · 6:30 PM nightly",
-      title: "Great Awakening Tent Revival",
+      date: "October 23 · 6:00 PM",
+      title: "Homecoming Friday Service",
       blurb:
-        "A week of worship, preaching, and ministry under the tent with Pastors Mark and Tammy Mathews. Come and receive your miracle.",
+        "Aaron, Julie Schilling, and family will be with us for a special Friday service.",
     },
     {
-      date: "This Sunday · 10:30 AM",
-      title: "Join Us This Sunday",
-      blurb: "Come a few minutes early — we'll be watching for you and help you get settled.",
+      date: "October 25 · 8:00–9:30 AM",
+      title: "Free Homecoming Breakfast",
+      blurb: "Breakfast is free and open to everyone before the anniversary celebration.",
     },
     {
-      date: "Every week",
-      title: "New Here? Plan a Visit",
-      blurb: "Let us know you're coming and we'll have someone ready to welcome you by name.",
+      date: "October 25 · 10:30 AM",
+      title: "Anniversary Celebration",
+      blurb: "Steve Grant returns for our Sunday Homecoming and anniversary celebration.",
     },
   ],
 
