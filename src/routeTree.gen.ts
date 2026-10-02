@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as WatchRouteImport } from './routes/watch'
 import { Route as TestimoniesRouteImport } from './routes/testimonies'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -26,6 +27,11 @@ import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lova
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
 
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WatchRoute = WatchRouteImport.update({
   id: '/watch',
   path: '/watch',
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonies': typeof TestimoniesRoute
   '/watch': typeof WatchRoute
+  '/welcome': typeof WelcomeRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
   '/api/public/prayer-request': typeof ApiPublicPrayerRequestRoute
@@ -138,6 +145,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonies': typeof TestimoniesRoute
   '/watch': typeof WatchRoute
+  '/welcome': typeof WelcomeRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
   '/api/public/prayer-request': typeof ApiPublicPrayerRequestRoute
@@ -157,6 +165,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonies': typeof TestimoniesRoute
   '/watch': typeof WatchRoute
+  '/welcome': typeof WelcomeRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/api/public/plan-visit': typeof ApiPublicPlanVisitRoute
   '/api/public/prayer-request': typeof ApiPublicPrayerRequestRoute
@@ -177,6 +186,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/testimonies'
     | '/watch'
+    | '/welcome'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
     | '/api/public/prayer-request'
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/testimonies'
     | '/watch'
+    | '/welcome'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
     | '/api/public/prayer-request'
@@ -213,6 +224,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/testimonies'
     | '/watch'
+    | '/welcome'
     | '/email/unsubscribe'
     | '/api/public/plan-visit'
     | '/api/public/prayer-request'
@@ -232,6 +244,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TestimoniesRoute: typeof TestimoniesRoute
   WatchRoute: typeof WatchRoute
+  WelcomeRoute: typeof WelcomeRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   ApiPublicPlanVisitRoute: typeof ApiPublicPlanVisitRoute
   ApiPublicPrayerRequestRoute: typeof ApiPublicPrayerRequestRoute
@@ -243,6 +256,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/watch': {
       id: '/watch'
       path: '/watch'
@@ -368,6 +388,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TestimoniesRoute: TestimoniesRoute,
   WatchRoute: WatchRoute,
+  WelcomeRoute: WelcomeRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   ApiPublicPlanVisitRoute: ApiPublicPlanVisitRoute,
   ApiPublicPrayerRequestRoute: ApiPublicPrayerRequestRoute,
