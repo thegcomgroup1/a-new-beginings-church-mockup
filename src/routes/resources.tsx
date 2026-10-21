@@ -120,12 +120,12 @@ function NewBelieversClass() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-secondary-foreground/70">Starting October 6</p>
-          <h2 className="mt-3 font-display text-3xl font-semibold text-secondary-foreground md:text-4xl">New Believers Class</h2>
+          <h2 className="mt-3 font-display text-3xl font-semibold text-secondary-foreground md:text-4xl">New Beginners Bible Study</h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-secondary-foreground/80">
-            Join us in person every Tuesday at 6:00 PM for a welcoming class built to help new believers grow in faith. Meetings are held in the sanctuary unless otherwise noted in church announcements.
+            Join us in person every Wednesday at 6:30 PM for a welcoming study built to help new believers grow in faith. Meetings are held in the sanctuary unless otherwise noted in church announcements.
           </p>
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-secondary-foreground/80">
-            <span className="inline-flex items-center gap-2"><CalendarDays className="h-4 w-4 text-primary" aria-hidden />Tuesdays at 6:00 PM</span>
+            <span className="inline-flex items-center gap-2"><CalendarDays className="h-4 w-4 text-primary" aria-hidden />Wednesdays at 6:30 PM</span>
             <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" aria-hidden />In person · Sanctuary</span>
           </div>
         </div>

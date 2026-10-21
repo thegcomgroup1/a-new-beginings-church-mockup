@@ -61,9 +61,10 @@ export const siteConfig = {
     timesShort: "Sundays · 10:30 AM",
     timesLong: [
       { day: "Sunday Worship", time: "10:30 AM" },
-      { day: "Monday Women's Study", time: "5:30 PM" },
-      { day: "Tuesday New Believers Class", time: "6:00 PM" },
-      { day: "Wednesday Prayer Night", time: "6:00 PM" },
+      { day: "Monday Women's Group", time: "5:30 PM" },
+      { day: "Tuesday Bible Discussion", time: "6:00 PM" },
+      { day: "Wednesday Prayer", time: "6:00 PM" },
+      { day: "Wednesday New Beginners Bible Study", time: "6:30 PM" },
     ],
     address: "1024 S Old 3, Rushville, IN 46173",
     mapEmbedUrl:
