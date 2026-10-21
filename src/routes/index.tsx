@@ -67,7 +67,7 @@ export const Route = createFileRoute("/")({
             { "@type": "OpeningHoursSpecification", dayOfWeek: "Sunday", opens: "10:30", closes: "12:00" },
             { "@type": "OpeningHoursSpecification", dayOfWeek: "Monday", opens: "17:30", closes: "19:00" },
             { "@type": "OpeningHoursSpecification", dayOfWeek: "Tuesday", opens: "18:00", closes: "19:30" },
-            { "@type": "OpeningHoursSpecification", dayOfWeek: "Wednesday", opens: "18:00", closes: "19:30" },
+            { "@type": "OpeningHoursSpecification", dayOfWeek: "Wednesday", opens: "18:00", closes: "20:00" },
           ],
           sameAs: siteConfig.contact.socials.map((s) => s.url),
         }),

@@ -55,10 +55,10 @@ export const recurringEvents: RecurringDef[] = [
     hour: 17,
     minute: 30,
     durationMin: 90,
-    title: "Women's Study",
+    title: "Women's Group",
     location: RUSHVILLE_ADDRESS,
     blurb:
-      "A weekly study just for the women of A New Beginning — friendship, prayer, and digging into the Word together.",
+      "A weekly group just for the women of A New Beginning — friendship, prayer, and digging into the Word together.",
   },
   {
     id: "tuesday-bible-discussion",
@@ -66,11 +66,10 @@ export const recurringEvents: RecurringDef[] = [
     hour: 18,
     minute: 0,
     durationMin: 90,
-    title: "New Believers Class",
+    title: "Bible Discussion",
     location: RUSHVILLE_ADDRESS,
     blurb:
-      "An in-person class in the sanctuary for new believers, meeting every Tuesday unless otherwise noted in our announcements.",
-    startsOn: new Date(2026, 9, 6, 0, 0, 0, 0),
+      "A weekly, open Bible discussion — bring your questions and dig into the Word together.",
   },
   {
     id: "wednesday-prayer-night",
@@ -78,10 +77,21 @@ export const recurringEvents: RecurringDef[] = [
     hour: 18,
     minute: 0,
     durationMin: 90,
-    title: "Prayer Night",
+    title: "Prayer",
     location: RUSHVILLE_ADDRESS,
     blurb:
       "We press in together for our church, our families, and our city. Come pray — bring whatever's on your heart.",
+  },
+  {
+    id: "wednesday-new-beginners-study",
+    weekday: 3,
+    hour: 18,
+    minute: 30,
+    durationMin: 90,
+    title: "New Beginners Bible Study",
+    location: `Sanctuary · ${RUSHVILLE_ADDRESS}`,
+    blurb:
+      "An in-person Bible study in the sanctuary for new believers, meeting every Wednesday unless otherwise noted in our announcements.",
   },
 ];
 

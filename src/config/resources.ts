@@ -41,10 +41,10 @@ export const resources: ResourceItem[] = [
   },
   {
     id: "new-believers-class-guide",
-    title: "New Believers Class Guide",
+    title: "New Beginners Bible Study Guide",
     kind: "Study Guide",
     description:
-      "Discussion questions and Scripture for the Tuesday New Believers Class — useful for class review or personal study.",
+      "Discussion questions and Scripture for the Wednesday New Beginners Bible Study — useful for class review or personal study.",
     fileUrl: "#",
     category: "Word of God",
     classResource: true,
