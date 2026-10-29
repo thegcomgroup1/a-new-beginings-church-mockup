@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { MapPin, Clock, ArrowRight } from "lucide-react";
+import { MapPin, Clock, ArrowRight, Facebook } from "lucide-react";
 import { siteConfig } from "@/config/site";
 
 export const Route = createFileRoute("/welcome")({
@@ -114,6 +114,17 @@ function Welcome() {
             Give
           </Link>
         </div>
+
+        {/* Facebook */}
+        <a
+          href={siteConfig.contact.socials.find((s) => s.label === "Facebook")?.url}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-3 flex h-14 w-full items-center justify-center rounded-md border border-border bg-card text-base font-semibold text-foreground transition-all hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <Facebook className="mr-2 h-5 w-5" aria-hidden />
+          Follow us on Facebook
+        </a>
 
         {/* Full site link */}
         <div className="mt-8 text-center">
